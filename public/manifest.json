@@ -1,0 +1,21 @@
+{
+    "name": "MemoClip",
+    "short_name": "MemoClip",
+    "description": "MemoClip App",
+    "icons": [
+      {
+        "src": "img/icons/MemoClip-128x128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "img/icons/MemoClip-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "display": "standalone",
+    "scope": "/",
+    "background_color": "#fff",
+    "theme_color": "#fff"
+}

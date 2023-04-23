@@ -12,6 +12,21 @@
 export default {
   name: 'app-menu'
 }
+
+console.log("test")
+
+const btnVibrate = document.querySelector("#vibrate-btn");
+
+      btnVibrate.addEventListener("click", () => {
+        vibrateSOS();
+      });
+
+      const vibrateSOS = () => {
+        window.navigator.vibrate([
+          200, 100, 200, 100, 200, 100, 400, 100, 400, 100, 400, 100, 200, 100,
+          200, 100, 200,
+        ]);
+      };
 </script>
 
 <style scoped>
