@@ -1,8 +1,9 @@
 <template>
     <nav>
         <ul>
-            <li><router-link to="/">Video List</router-link></li>
-            <li><router-link to="/record">Record Video</router-link></li>
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/video-list">Video List</router-link></li>
+            <li><router-link to="/record-video">Record Video</router-link></li>
             <li><router-link to="/app-settings">Settings</router-link></li>
         </ul>
     </nav>
@@ -13,14 +14,14 @@
 export default {
     name: "app-menu",
     methods: {
-      vibrate() {
-        if (navigator.vibrate) {
-          navigator.vibrate([200, 100, 200])
-        } else {
-          alert("Twoja przeglądarka nie obsługuje wibracji.")
-        }
-      }
-    }
+        vibrate() {
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            } else {
+                alert("Twoja przeglądarka nie obsługuje wibracji.");
+            }
+        },
+    },
 };
 </script>
 

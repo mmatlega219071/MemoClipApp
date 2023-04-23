@@ -44,11 +44,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-console.log(app);
-
+const application = initializeApp(firebaseConfig);
+console.log(application);
 
 // Create Vue instance and mount to DOM
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+
+app.use(router);
+
+app.mount("#app");
 
 
