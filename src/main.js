@@ -4,7 +4,6 @@ import App from "./App.vue";
 import { initializeApp } from "firebase/app";
 import "firebase/auth";
 import router from './router';
-import { initializeApp } from 'firebase/app';
 import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {

@@ -1,53 +1,47 @@
 <template>
-  <nav>
-    <ul>
-      <li><router-link to="/">Video List</router-link></li>
-      <li><router-link to="/record">Record Video</router-link></li>
-      <li><router-link to="/app-settings">Settings</router-link></li>
-    </ul>
-  </nav>
+    <nav>
+        <ul>
+            <li><router-link to="/">Video List</router-link></li>
+            <li><router-link to="/record">Record Video</router-link></li>
+            <li><router-link to="/app-settings">Settings</router-link></li>
+        </ul>
+    </nav>
+    <button id="btn-vibrate" @click="vibrate()">Wibracja</button>
 </template>
 
 <script>
 export default {
-  name: 'app-menu'
-}
-
-console.log("test")
-
-const btnVibrate = document.querySelector("#vibrate-btn");
-
-      btnVibrate.addEventListener("click", () => {
-        vibrateSOS();
-      });
-
-      const vibrateSOS = () => {
-        window.navigator.vibrate([
-          200, 100, 200, 100, 200, 100, 400, 100, 400, 100, 400, 100, 200, 100,
-          200, 100, 200,
-        ]);
-      };
+    name: "app-menu",
+    methods: {
+      vibrate() {
+        if (navigator.vibrate) {
+          navigator.vibrate([200, 100, 200])
+        } else {
+          alert("Twoja przeglądarka nie obsługuje wibracji.")
+        }
+      }
+    }
+};
 </script>
 
 <style scoped>
 nav {
-  background-color: #2d2d2d;
-  color: #fff;
-  display: flex;
+    background-color: #2d2d2d;
+    color: #fff;
+    display: flex;
 }
 
 ul {
-  list-style: none;
-  display: flex;
+    list-style: none;
+    display: flex;
 }
 
 li {
-  margin: 0 10px;
+    margin: 0 10px;
 }
 
 a {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 </style>
-
