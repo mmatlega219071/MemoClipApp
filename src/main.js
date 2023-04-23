@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import 'firebase/auth';
 import { initializeApp } from 'firebase/app';
+import './registerServiceWorker'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
