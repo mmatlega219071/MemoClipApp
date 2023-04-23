@@ -28,6 +28,12 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
   </div>
+  <div class="container">
+      <h1 class="text-center mt-3">Vibration App</h1>
+      <div class="row justify-content-center mt-5">
+        <button class="btn btn-primary" id="vibrate-btn">Wibruj!</button>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -37,6 +43,21 @@ export default {
     msg: String
   }
 }
+
+console.log("test")
+
+const btnVibrate = document.querySelector("#vibrate-btn");
+
+      btnVibrate.addEventListener("click", () => {
+        vibrateSOS();
+      });
+
+      const vibrateSOS = () => {
+        window.navigator.vibrate([
+          200, 100, 200, 100, 200, 100, 400, 100, 400, 100, 400, 100, 200, 100,
+          200, 100, 200,
+        ]);
+      };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
