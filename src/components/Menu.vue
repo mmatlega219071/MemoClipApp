@@ -1,9 +1,9 @@
 <template>
   <nav>
     <ul>
-      <li><router-link to="/">Video List</router-link></li>
-      <li><router-link to="/record">Record Video</router-link></li>
-      <li><router-link to="/app-settings">Settings</router-link></li>
+      <li><router-link to="/video-list">Video Listt</router-link></li>
+      <li><router-link to="/record-video">Record Video</router-link></li>
+      <li><router-link to="/app-settings">Settingsss</router-link></li>
     </ul>
   </nav>
 </template>
@@ -35,4 +35,3 @@ a {
   text-decoration: none;
 }
 </style>
-
