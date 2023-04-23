@@ -32,7 +32,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
     authDomain: "memoclip-e3cdb.firebaseapp.com",
@@ -52,5 +51,3 @@ const app = createApp(App);
 app.use(router);
 
 app.mount("#app");
-
-
