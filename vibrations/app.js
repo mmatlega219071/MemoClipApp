@@ -1,13 +1,22 @@
- // Sprawdzenie czy przeglądarka obsługuje wibracje
- if ("vibrate" in navigator) {
-  console.log("Twoja przeglądarka obsługuje wibracje!");
-}
+class VibrationApp {
+  constructor() {
+    this.vibrateBtn = document.getElementById("vibrate-btn");
+    this.addEventListeners();
+  }
 
-// Funkcja wywołująca wibracje
-function vibrateDevice() {
-  // Sprawdzenie czy wibracje są dostępne
-  if ("vibrate" in navigator) {
-    // Ustawienie czasu trwania wibracji
-    navigator.vibrate([100, 100, 200]);
+  addEventListeners() {
+    this.vibrateBtn.addEventListener("click", this.handleVibrateBtnClick.bind(this));
+  }
+
+  handleVibrateBtnClick() {
+    if (navigator.vibrate) {
+      // Vibrate for 500ms
+      navigator.vibrate(500,200,100);
+    } else {
+      alert("Vibration is not supported in your browser.");
+    }
   }
 }
+
+// Initialize the app
+const app = new VibrationApp();
