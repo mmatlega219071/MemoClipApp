@@ -45,7 +45,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const application = initializeApp(firebaseConfig);
-console.log(application);
 
 // Create Vue instance and mount to DOM
 const app = createApp(App);
