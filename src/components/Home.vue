@@ -15,17 +15,20 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">Ostatnio dodane</router-link>
-          </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link">Lista wideo</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link">Ustawienia</router-link>
           </li>
+          <li class="nav-item" v-if="!isLoggedIn">
+            <router-link class="nav-link" to="/login">Zaloguj się</router-link>
+          </li>
+          <li class="nav-item" v-if="!isLoggedIn">
+            <router-link class="nav-link" to="/register">Zarejestruj się</router-link>
+          </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <button class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</button>
+            <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
           </li>
         </ul>
       </div>
