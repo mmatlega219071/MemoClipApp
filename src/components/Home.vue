@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link to="/" class="navbar-brand">MemoClip</router-link>
+      <router-link to="/" class="navbar-brand"><img src="../../public/img/icons/MemoClip-128x128.png" alt="App Logo" class="logo" /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -39,7 +39,6 @@
     </div>
     <div class="footer">
       <button class="record-button" @click="startRecording">
-        
       </button>
     </div>
 </template>
@@ -86,69 +85,19 @@ export default {
   methods: {
   async startRecording() {
     alert("Rozpoczynam nagrywanie :)");
-    
-    try {
-      // Pobranie dostępnych urządzeń multimedialnych
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      
-      // Filtrowanie urządzeń i pobranie obiektu reprezentującego kamerę
-      const videoDevice = devices.find(device => device.kind === 'videoinput');
-
-      // Uruchomienie kamery i przypisanie strumienia do elementu video
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoDevice.deviceId } });
-      this.$refs.videoStream.srcObject = stream;
-    } catch (error) {
-      console.error(error);
-    }
+    // Tutaj kod obsługujący nagrywanie filmiku
   }
 },
 }
 </script>
 
 <style scoped>
-.welcome-screen {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5f5f5;
+.container-fluid img {
+  max-height: 40px;
 }
-
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  height: 40px;
-  margin-right: 20px;
-}
-
-.menu {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.menu li {
-  margin: 0 10px;
-}
-
-.menu a {
-  text-decoration: none;
-  color: #333;
-}
-
 .video-container {
   width: 100%;
-  height: calc(100vh - 176px);
+  height: calc(100vh - 216px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,14 +120,11 @@ export default {
 }
 
 .record-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   background-color: transparent;
-  border: 3px solid #fff;
+  border: 5px solid #fff;
   color: #fff;
 }
 
