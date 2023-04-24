@@ -69,15 +69,39 @@ const handleSignOut = () => {
     router.push("/");    
   })
 }
-
-const startRecording = () => {
-  alert("Rozpoczynam nagrywanie :)");
-}
 </script>
 
 <script>
 export default {
-  name: 'HomeScreen'
+  name: 'HomeScreen',
+  data() {
+    return {
+      recording: false,
+      chunks: [],
+      mediaRecorder: null,
+      videoURL: null,
+      error: null,
+    };
+  },
+  methods: {
+  async startRecording() {
+    alert("Rozpoczynam nagrywanie :)");
+    
+    try {
+      // Pobranie dostępnych urządzeń multimedialnych
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      
+      // Filtrowanie urządzeń i pobranie obiektu reprezentującego kamerę
+      const videoDevice = devices.find(device => device.kind === 'videoinput');
+
+      // Uruchomienie kamery i przypisanie strumienia do elementu video
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoDevice.deviceId } });
+      this.$refs.videoStream.srcObject = stream;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+},
 }
 </script>
 
