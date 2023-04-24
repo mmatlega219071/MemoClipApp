@@ -2,7 +2,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import { initializeApp } from "firebase/app";
-import "firebase/auth";
+import { getAuth } from "firebase/auth";
 import router from './router';
 import { register } from 'register-service-worker'
 
@@ -44,6 +44,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const application = initializeApp(firebaseConfig);
+const auth = getAuth(application);
 
 // Create Vue instance and mount to DOM
 const app = createApp(App);
@@ -51,3 +52,5 @@ const app = createApp(App);
 app.use(router);
 
 app.mount("#app");
+
+export { auth };

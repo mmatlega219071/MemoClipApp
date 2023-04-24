@@ -8,6 +8,8 @@
         </ul>
     </nav>
     <h2>Zarejestruj się</h2>
+    <p><input type="text" placeholder="Imię" v-model="firstName" /></p>
+    <p><input type="text" placeholder="Nazwisko" v-model="lastName" /></p>
     <p><input type="text" placeholder="Email" v-model="email" /></p>
     <p><input type="text" placeholder="Hasło" v-model="password" /></p>
     <p><button @click="register">Zarejestruj</button></p>
@@ -22,20 +24,46 @@
 /* eslint-disable no-unused-vars */
 import router from "@/router";
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore, collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { ref } from "vue";
 
+const firstName = ref("");
+const lastName = ref("");
 const email = ref("");
 const password = ref("");
+const errMsg = ref("");
 
 const register = () => {
-    createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-        .then((data) => {
-            console.log("Pomyślnie dodano użytkownika");
-            router.push("/");
+  const auth = getAuth();
+  const db = getFirestore();
+  
+  createUserWithEmailAndPassword(auth, email.value, password.value)
+    .then((user) => {
+      console.log("Pomyślnie dodano użytkownika: ", user.user.uid);
+      
+      const usersCollection = collection(db, "users");
+      const userDoc = doc(usersCollection, user.user.uid);
+
+      const userData = {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+      
+      setDoc(userDoc, userData)
+        .then(() => {
+          router.push("/");
+          console.log("Użytkownik dodany")
         })
         .catch((error) => {
-            console.log(error.code);
+          console.log(error);
         });
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 };
 
 const registerWithGoogle = () => {
