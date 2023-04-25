@@ -67,11 +67,34 @@ const register = () => {
 };
 
 const registerWithGoogle = () => {
+    const db = getFirestore();
     const provider = new GoogleAuthProvider();
     
     signInWithPopup(getAuth(), provider)
         .then((result) => {
-            console.log(result.user);
+            const usersCollection = collection(db, "users");
+            const userDoc = doc(usersCollection, result.user.uid);
+
+            const user = result.user;
+            const [firstName, lastName] = user.displayName.split(' ');
+            const email = user.email;
+
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+            };
+            
+            setDoc(userDoc, userData)
+                .then(() => {
+                    router.push("/");
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+
             router.push("/");
         })
         .catch((error) => {
