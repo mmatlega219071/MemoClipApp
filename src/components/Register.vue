@@ -1,12 +1,35 @@
 <template>
-    <nav>
-        <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/video-list">Video List</router-link></li>
-            <li><router-link to="/record-video">Record Video</router-link></li>
-            <li><router-link to="/app-settings">Settings</router-link></li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid"> <!-- kontener przy zmniejszeniu lista -->
+      <router-link class="navbar-brand" to="/">Home</router-link>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/video-list">Video List</router-link>
+          </li>
+          <li class="nav-item" v-if="!isLoggedIn">
+            <router-link class="nav-link" to="/login">Log in</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/record-video">Record Video</router-link>
+          </li>
+          
         </ul>
-    </nav>
+      </div>
+      <div > Settings </div>
+    </div>
+  </nav>
     <h2>Zarejestruj się</h2>
     <p><input type="text" placeholder="Imię" v-model="firstName" /></p>
     <p><input type="text" placeholder="Nazwisko" v-model="lastName" /></p>
@@ -110,23 +133,5 @@ export default {
 </script>
 
 <style scoped>
-nav {
-    background-color: #2d2d2d;
-    color: #fff;
-    display: flex;
-}
 
-ul {
-    list-style: none;
-    display: flex;
-}
-
-li {
-    margin: 0 10px;
-}
-
-a {
-    color: #fff;
-    text-decoration: none;
-}
 </style>

@@ -16,16 +16,16 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link to="/video-list" class="nav-link">Lista wideo</router-link>
+            <router-link to="/video-list" class="nav-link">Video list</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/app-settings" class="nav-link">Ustawienia</router-link>
+            <router-link to="/app-settings" class="nav-link">Settings</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link class="nav-link" to="/login">Zaloguj się</router-link>
+            <router-link class="nav-link" to="/login">Log in</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link class="nav-link" to="/register">Zarejestruj się</router-link>
+            <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
