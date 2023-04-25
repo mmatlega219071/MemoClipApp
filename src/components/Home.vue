@@ -1,7 +1,12 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link to="/" class="navbar-brand"><img src="../../public/img/icons/MemoClip-128x128.png" alt="App Logo" class="logo" /></router-link>
+      <router-link to="/" class="navbar-brand"
+        ><img
+          src="../../public/img/icons/MemoClip-128x128.png"
+          alt="App Logo"
+          class="logo"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -35,16 +40,15 @@
     </div>
   </nav>
   <div class="video-container">
-      <video ref="videoPlayer" autoplay muted playsinline></video>
-    </div>
-    <div class="footer">
-      <button class="record-button" @click="startRecording">
-      </button>
-    </div>
+    <video ref="videoPlayer" autoplay muted playsinline></video>
+  </div>
+  <div class="footer">
+    <button class="record-button" @click="startRecording"></button>
+  </div>
 </template>
 
 <script setup>
-import router from '../router'
+import router from "../router";
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -52,27 +56,27 @@ const isLoggedIn = ref(false);
 
 let auth;
 
-onMounted (() => {
+onMounted(() => {
   auth = getAuth();
   onAuthStateChanged(auth, (user) => {
-    if(user) {
+    if (user) {
       isLoggedIn.value = true;
     } else {
       isLoggedIn.value = false;
     }
-  })
-})
+  });
+});
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
-    router.push("/");    
-  })
-}
+    router.push("/");
+  });
+};
 </script>
 
 <script>
 export default {
-  name: 'HomeScreen',
+  name: "HomeScreen",
   data() {
     return {
       recording: false,
@@ -83,12 +87,26 @@ export default {
     };
   },
   methods: {
-  async startRecording() {
-    alert("Rozpoczynam nagrywanie :)");
-    // Tutaj kod obsługujący nagrywanie filmiku
-  }
-},
-}
+    async startRecording() {
+      alert("Rozpoczynam nagrywanie :)");
+
+      var errorCallback = function (e) {
+        console.log("Reeeejected!", e);
+      };
+      navigator.getUserMedia(
+        { video: true, audio: true },
+        function (localMediaStream) {
+          var video = document.querySelector("video");
+          video.srcObject = localMediaStream;
+          video.onloadedmetadata = function () {
+            video.play();
+          };
+        },
+        errorCallback
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -127,5 +145,4 @@ export default {
   border: 5px solid #fff;
   color: #fff;
 }
-
 </style>
