@@ -86,8 +86,20 @@ export default {
   methods: {
   async startRecording() {
     alert("Rozpoczynam nagrywanie :)");
-    addVideo(1);
+    //addVideo({name: 'firstvideo'});
     // Tutaj kod obsługujący nagrywanie filmiku
+
+    var errorCallback = function(e) {
+    console.log('Reeeejected!', e);
+    };
+    navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+    var video = document.querySelector('video');
+    video.srcObject = localMediaStream;
+    video.onloadedmetadata = function() {
+        video.play();
+    };
+    }, errorCallback);
+
   }
 
 },
