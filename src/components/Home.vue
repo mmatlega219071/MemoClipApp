@@ -94,7 +94,9 @@ export default {
   methods: {
     async startRecording() {
       alert("Rozpoczynam nagrywanie :)");
-      //addVideo({name: 'firstvideo'});
+      const location = await this.getLocation();
+      console.log(location);
+      addVideo({ name: "firstvideo", location });
       // Tutaj kod obsługujący nagrywanie filmiku
 
       var errorCallback = function (e) {
@@ -111,6 +113,21 @@ export default {
         },
         errorCallback
       );
+    },
+
+    async getLocation() {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latlng = [
+              position.coords.latitude,
+              position.coords.longitude,
+            ];
+            resolve(latlng);
+          },
+          (error) => reject(error)
+        );
+      });
     },
   },
 };
