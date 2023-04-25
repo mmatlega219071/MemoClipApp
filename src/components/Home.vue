@@ -21,10 +21,14 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link to="/video-list" class="nav-link">Video list</router-link>
+            <router-link to="/video-list" class="nav-link"
+              >Video list</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link to="/app-settings" class="nav-link">Settings</router-link>
+            <router-link to="/app-settings" class="nav-link"
+              >Settings</router-link
+            >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -51,6 +55,7 @@
 import router from "../router";
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { addVideo } from "../collections/videos";
 
 const isLoggedIn = ref(false);
 
@@ -89,21 +94,8 @@ export default {
   methods: {
     async startRecording() {
       alert("Rozpoczynam nagrywanie :)");
-
-      var errorCallback = function (e) {
-        console.log("Reeeejected!", e);
-      };
-      navigator.getUserMedia(
-        { video: true, audio: true },
-        function (localMediaStream) {
-          var video = document.querySelector("video");
-          video.srcObject = localMediaStream;
-          video.onloadedmetadata = function () {
-            video.play();
-          };
-        },
-        errorCallback
-      );
+      addVideo(1);
+      // Tutaj kod obsługujący nagrywanie filmiku
     },
   },
 };
