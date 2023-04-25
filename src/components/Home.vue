@@ -47,6 +47,7 @@
 import router from '../router'
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { addVideo } from '../collections/videos'
 
 const isLoggedIn = ref(false);
 
@@ -85,8 +86,10 @@ export default {
   methods: {
   async startRecording() {
     alert("Rozpoczynam nagrywanie :)");
+    addVideo(1);
     // Tutaj kod obsługujący nagrywanie filmiku
   }
+
 },
 }
 </script>
