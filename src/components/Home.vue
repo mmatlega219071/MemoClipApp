@@ -22,13 +22,15 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link"
-              >Video list</router-link
-            >
+              >Video list</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
               >Settings</router-link
             >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/welcome">Welcome Site</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -39,6 +41,7 @@
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
           </li>
+          
         </ul>
       </div>
     </div>
