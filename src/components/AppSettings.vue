@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid"> <!-- kontener przy zmniejszeniu lista -->
       <router-link class="navbar-brand" to="/">Home</router-link>
       <button
@@ -24,7 +24,6 @@
           
         </ul>
       </div>
-      <div > Settings </div>
     </div>
   </nav>
 </template>
@@ -36,6 +35,6 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 
 </style>

@@ -24,13 +24,9 @@
           
         </ul>
       </div>
-        <div> Record Video </div>
     </div>
   </nav>
-    <div>
-        <!-- RecordVideo component -->
-        RecordVideo
-    </div>
+
 </template>
 
 <script>
@@ -41,23 +37,5 @@ export default {
 </script>
 
 <style scoped>
-nav {
-    background-color: #2d2d2d;
-    color: #fff;
-    display: flex;
-}
 
-ul {
-    list-style: none;
-    display: flex;
-}
-
-li {
-    margin: 0 10px;
-}
-
-a {
-    color: #fff;
-    text-decoration: none;
-}
 </style>
