@@ -14,13 +14,14 @@
         "type": "image/png"
       }
     ],
-    "permissions": {
+   
+    "display": "standalone",
+    "scope": "/",
+    "background_color": "#fff",
+    "theme_color": "#fff",
+     "permissions": {
         "camera": {},
         "microphone": {},
         "geolocation": {}
     },
-    "display": "standalone",
-    "scope": "/",
-    "background_color": "#fff",
-    "theme_color": "#fff"
 }
