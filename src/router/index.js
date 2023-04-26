@@ -5,6 +5,7 @@ import RecordVideo from '../components/RecordVideo.vue';
 import AppSettings from '../components/AppSettings.vue';
 import LogIn from '../components/LogIn.vue';
 import Register from '../components/Register.vue';
+import WelcomeScreen from '../components/Welcome.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -12,7 +13,8 @@ const routes = [
   { path: '/record-video', component: RecordVideo },
   { path: '/app-settings', component: AppSettings },
   { path: '/login', component: LogIn },
-  { path: '/register', component: Register }
+  { path: '/register', component: Register },
+  { path: '/welcome', component: WelcomeScreen }
 ];
 
 const router = createRouter({

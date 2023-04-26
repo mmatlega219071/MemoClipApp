@@ -14,8 +14,14 @@
         "type": "image/png"
       }
     ],
+   
     "display": "standalone",
     "scope": "/",
     "background_color": "#fff",
-    "theme_color": "#fff"
+    "theme_color": "#fff",
+     "permissions": {
+        "camera": {},
+        "microphone": {},
+        "geolocation": {}
+    }
 }

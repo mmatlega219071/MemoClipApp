@@ -22,21 +22,24 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link"
-              >Lista wideo</router-link
+              >Video list</router-link
             >
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
-              >Ustawienia</router-link
+              >Settings</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/welcome"
+              >Welcome Site</router-link
             >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link class="nav-link" to="/login">Zaloguj się</router-link>
+            <router-link class="nav-link" to="/login">Log in</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link class="nav-link" to="/register"
-              >Zarejestruj się</router-link
-            >
+            <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
@@ -101,20 +104,21 @@ export default {
       addVideo({ name: "firstvideo", location });
       // Tutaj kod obsługujący nagrywanie filmiku
 
-      var errorCallback = function (e) {
-        console.log("Reeeejected!", e);
-      };
-      navigator.getUserMedia(
-        { video: true, audio: true },
-        function (localMediaStream) {
-          var video = document.querySelector("video");
-          video.srcObject = localMediaStream;
-          video.onloadedmetadata = function () {
-            video.play();
-          };
-        },
-        errorCallback
-      );
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true,
+        });
+        const video = document.querySelector("video");
+        if ("srcObject" in video) {
+          video.srcObject = stream;
+        } else {
+          video.src = window.URL.createObjectURL(stream);
+        }
+        await video.play();
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     async getLocation() {
