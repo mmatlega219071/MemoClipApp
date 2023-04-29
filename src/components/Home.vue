@@ -22,7 +22,8 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link"
-              >Video list</router-link>
+              >Video list</router-link
+            >
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
@@ -30,7 +31,9 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/welcome">Welcome Site</router-link>
+            <router-link class="nav-link" to="/welcome"
+              >Welcome Site</router-link
+            >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -41,7 +44,6 @@
           <li class="nav-item" v-if="isLoggedIn">
             <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
           </li>
-          
         </ul>
       </div>
     </div>
@@ -59,6 +61,8 @@ import router from "../router";
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { addVideo } from "../collections/videos";
+//import { firestore } from "../main";
+import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
 
 const isLoggedIn = ref(false);
 
@@ -95,6 +99,38 @@ export default {
     };
   },
   methods: {
+    async saveVideoToFirestore(recordedChunks) {
+      // Create a root reference
+      const storage = getStorage();
+      // Create a reference to 'video'
+      const dateFormatted = new Date()
+        .toISOString()
+        .split(".")
+        .at(0)
+        .replace(/:/g, "");
+
+      const uniqueVideoName =
+        getAuth().currentUser.uid + "-" + dateFormatted + ".mp4";
+      const videosRef = storageRef(storage, uniqueVideoName);
+
+      try {
+        // Upload video to Cloud Storage
+
+        const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
+
+        // 'videoBlob' comes from the Blob or File API
+        uploadBytes(videosRef, videoBlob).then((snapshot) => {
+          console.log("Uploaded a blob!");
+          console.log(snapshot);
+        });
+
+        // Save video metadata to Firestore
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred while saving the video to Firestore.");
+      }
+    },
+
     async startRecording() {
       alert("Rozpoczynam nagrywanie :)");
       const location = await this.getLocation();
@@ -114,6 +150,49 @@ export default {
           video.src = window.URL.createObjectURL(stream);
         }
         await video.play();
+
+        const recordedChunks = [];
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.addEventListener("dataavailable", (e) => {
+          if (e.data.size > 0) {
+            recordedChunks.push(e.data);
+          }
+        });
+
+        mediaRecorder.addEventListener("stop", () => {
+          const recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
+          const recordedURL = window.URL.createObjectURL(recordedBlob);
+          video.src = recordedURL;
+          video.controls = true;
+          video.play();
+
+          // Dodaj przyciski Zapisz i Odrzuć
+          const saveButton = document.createElement("button");
+          saveButton.textContent = "Zapisz";
+          saveButton.addEventListener("click", () => {
+            this.saveVideoToFirestore(recordedChunks);
+            console.log("zapisano nagranie");
+          });
+
+          const discardButton = document.createElement("button");
+          discardButton.textContent = "Odrzuć";
+          discardButton.addEventListener("click", function () {
+            // Kod obsługujący odrzucanie nagrania
+            console.log("Odrzucam nagranie...");
+          });
+
+          const buttonContainer = document.createElement("div");
+          buttonContainer.appendChild(saveButton);
+          buttonContainer.appendChild(discardButton);
+          video.parentElement.appendChild(buttonContainer);
+        });
+
+        setTimeout(() => {
+          mediaRecorder.stop();
+          video.srcObject = null;
+        }, 2000);
+
+        mediaRecorder.start();
       } catch (error) {
         console.error(error);
       }
