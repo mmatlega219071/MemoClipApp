@@ -102,17 +102,25 @@ export default {
     async saveVideoToFirestore(recordedChunks) {
       // Create a root reference
       const storage = getStorage();
-      // Create a reference to 'mountains.jpg'
-      const videosRef = storageRef(storage, "video.mp4");
+      // Create a reference to 'video'
+      const dateFormatted = new Date()
+        .toISOString()
+        .split(".")
+        .at(0)
+        .replace(/:/g, "");
+
+      const uniqueVideoName =
+        getAuth().currentUser.uid + "-" + dateFormatted + ".mp4";
+      const videosRef = storageRef(storage, uniqueVideoName);
 
       try {
         // Upload video to Cloud Storage
 
         const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
 
-        // 'file' comes from the Blob or File API
+        // 'videoBlob' comes from the Blob or File API
         uploadBytes(videosRef, videoBlob).then((snapshot) => {
-          console.log("Uploaded a blob or file!");
+          console.log("Uploaded a blob!");
           console.log(snapshot);
         });
 
