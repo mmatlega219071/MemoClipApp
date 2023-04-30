@@ -9,9 +9,26 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: 'app-menu'
-}
+  // Your component properties
+
+  methods: {
+    async fetchData() {
+      try {
+        const response = await axios.get('/api/home');
+        // Use response data in your component
+      } catch (error) {
+        // Handle errors
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchData();
+  },
+};
 </script>
 
 <style scoped>
