@@ -16,13 +16,19 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/video-list">Video List</router-link>
+            <router-link class="nav-link" to="/video-list"
+              >Video List</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/record-video">Record Video</router-link>
+            <router-link class="nav-link" to="/record-video"
+              >Record Video</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings">Settings</router-link>
+            <router-link class="nav-link" to="/app-settings"
+              >Settings</router-link
+            >
           </li>
         </ul>
       </div>
@@ -35,16 +41,30 @@
         <form>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" v-model="email">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              v-model="email"
+            />
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Hasło</label>
-            <input type="password" class="form-control" id="password" v-model="password">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              v-model="password"
+            />
           </div>
           <div class="d-grid gap-2">
-            <button type="button" class="btn btn-primary" @click="register">Zaloguj</button>
+            <button type="button" class="btn btn-primary" @click="register">
+              Zaloguj
+            </button>
             <router-link to="/register">
-                <button type="button" class="btn btn-secondary">Nie masz konta? Zarejestruj się już teraz!</button>
+              <button type="button" class="btn btn-secondary">
+                Nie masz konta? Zarejestruj się już teraz!
+              </button>
             </router-link>
           </div>
           <p class="text-danger">{{ errMsg }}</p>
@@ -54,43 +74,35 @@
   </div>
 </template>
 <script setup>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { signInWithEmailAndPassword } from "../lib/memoClipApiClient";
 
 const email = ref("");
 const password = ref("");
-const errMsg = ref("")
+const errMsg = ref("");
 const router = useRouter();
 
-const register = () => {
-    const auth = getAuth();
-
-    signInWithEmailAndPassword(auth, email.value, password.value)
-        .then((data) => {
-            console.log("Zalogowano pomyślnie");
-            console.log(auth.currentUser);
-            console.log(data)
-
-            router.push('/')
-        })
-        .catch((error) => {
-            console.log(error.code);
-
-            switch (error.code) {
-                case "auth/invalid-email":
-                    errMsg.value = "Niepoprawny email";
-                    break;
-                case "auth/user-not-found":
-                    errMsg.value = "Nie znaleziono użytkownika o podanym adresie email";
-                    break;
-                default:
-                    errMsg.value ="Email lub hasło jest niepoprawne";
-                    break;
-            }
-        });
+const register = async () => {
+  try {
+    await signInWithEmailAndPassword(email.value, password.value);
+    console.log("Zalogowano pomyślnie");
+    router.push("/");
+  } catch (error) {
+    console.log(error.code);
+    switch (error.code) {
+      case "auth/invalid-email":
+        errMsg.value = "Niepoprawny email";
+        break;
+      case "auth/user-not-found":
+        errMsg.value = "Nie znaleziono użytkownika o podanym adresie email";
+        break;
+      default:
+        errMsg.value = "Email lub hasło jest niepoprawne";
+        break;
+    }
+  }
 };
-
 </script>
 <style scoped>
 /* brak stylów */

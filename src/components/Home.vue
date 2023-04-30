@@ -57,20 +57,18 @@
 </template>
 
 <script setup>
-import router from "../router";
 import { onMounted, ref } from "vue";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { addVideo } from "../collections/videos";
-//import { firestore } from "../main";
-import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import {
+  onAuthStateChanged,
+  saveVideoWithLocation,
+  signOut,
+} from "../lib/memoClipApiClient";
+import router from "../router";
 
 const isLoggedIn = ref(false);
 
-let auth;
-
 onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged((user) => {
     if (user) {
       isLoggedIn.value = true;
     } else {
@@ -79,10 +77,9 @@ onMounted(() => {
   });
 });
 
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    router.push("/");
-  });
+const handleSignOut = async () => {
+  await signOut();
+  router.push("/");
 };
 </script>
 
@@ -99,43 +96,8 @@ export default {
     };
   },
   methods: {
-    async saveVideoToFirestore(recordedChunks) {
-      // Create a root reference
-      const storage = getStorage();
-      // Create a reference to 'video'
-      const dateFormatted = new Date()
-        .toISOString()
-        .split(".")
-        .at(0)
-        .replace(/:/g, "");
-
-      const uniqueVideoName =
-        getAuth().currentUser.uid + "-" + dateFormatted + ".mp4";
-      const videosRef = storageRef(storage, uniqueVideoName);
-
-      try {
-        // Upload video to Cloud Storage
-
-        const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
-
-        // 'videoBlob' comes from the Blob or File API
-        uploadBytes(videosRef, videoBlob).then((snapshot) => {
-          console.log("Uploaded a blob!");
-          console.log(snapshot);
-        });
-
-        // Save video metadata to Firestore
-      } catch (error) {
-        console.error(error);
-        alert("An error occurred while saving the video to Firestore.");
-      }
-    },
-
     async startRecording() {
       alert("Rozpoczynam nagrywanie :)");
-      const location = await this.getLocation();
-      console.log(location);
-      addVideo({ name: "firstvideo", location });
       // Tutaj kod obsługujący nagrywanie filmiku
 
       try {
@@ -169,9 +131,17 @@ export default {
           // Dodaj przyciski Zapisz i Odrzuć
           const saveButton = document.createElement("button");
           saveButton.textContent = "Zapisz";
-          saveButton.addEventListener("click", () => {
-            this.saveVideoToFirestore(recordedChunks);
-            console.log("zapisano nagranie");
+          saveButton.addEventListener("click", async () => {
+            try {
+              await saveVideoWithLocation(
+                recordedChunks,
+                await this.getLocation()
+              );
+              console.log("zapisano nagranie");
+            } catch (err) {
+              console.error(err);
+              alert("Błąd przy zapisywaniu nagrania");
+            }
           });
 
           const discardButton = document.createElement("button");
@@ -202,11 +172,11 @@ export default {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const latlng = [
+            const coordinates = [
               position.coords.latitude,
               position.coords.longitude,
             ];
-            resolve(latlng);
+            resolve(coordinates);
           },
           (error) => reject(error)
         );
