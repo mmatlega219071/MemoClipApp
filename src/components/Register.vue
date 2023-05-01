@@ -73,14 +73,14 @@ const register = async () => {
             email: email.value,
             password: password.value,
         });
-
+        handleRegistration(response.data.userID)
         console.log("Użytkownik dodany");
         console.log(response);
         console.log(response.data.userID)
 
         router.push("/");
         console.log('Przechodzę do handle ...')
-        handleRegistration(response.data.userID)
+       
         console.log('Wykonałem handle ...')
     } catch (error) {
         console.log(error + "o kurde nie działa");

@@ -37,8 +37,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
-
 // Endpoint do zapisu tokenu rejestracji dla konkretnego użytkownika
 router.post('/token', async (req, res) => {
     try {
@@ -58,7 +56,7 @@ router.post('/token', async (req, res) => {
       console.error(error);
       res.sendStatus(500);
     }
-  });
+});
 
 
 module.exports = router;
