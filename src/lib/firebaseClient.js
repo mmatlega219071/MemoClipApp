@@ -32,11 +32,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const application = initializeApp(firebaseConfig);
 const db = getFirestore();
-const auth = getAuth(application);
+getAuth(application);
 
 export default {
   async createUserWithEmailAndPassword(email, password, firstName, lastName) {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
+    const user = await createUserWithEmailAndPassword(
+      getAuth(),
+      email,
+      password
+    );
     const usersCollection = collection(db, "users");
     const userDoc = doc(usersCollection, user.user.uid);
     const userData = {
@@ -52,7 +56,7 @@ export default {
 
   async createUserWithGoogleProvider() {
     const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(getAuth(), provider);
 
     const usersCollection = collection(db, "users");
     const userDoc = doc(usersCollection, result.user.uid);
@@ -71,15 +75,15 @@ export default {
   },
 
   async signInWithEmailAndPassword(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(getAuth(), email, password);
   },
 
   async onAuthStateChanged(callback) {
-    return onAuthStateChanged(auth, callback);
+    return onAuthStateChanged(getAuth(), callback);
   },
 
   async signOut() {
-    return signOut(auth);
+    return signOut(getAuth());
   },
 
   async saveVideoWithLocation(recordedChunks, location) {
@@ -89,19 +93,20 @@ export default {
       .split(".")
       .at(0)
       .replace(/:/g, "");
-    const uniqueVideoName = auth.currentUser.uid + "-" + dateFormatted + ".mp4";
+    const { currentUser } = getAuth();
+    const uniqueVideoName = currentUser.uid + "-" + dateFormatted + ".mp4";
     const videosRef = storageRef(storage, uniqueVideoName);
     const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
     await uploadBytes(videosRef, videoBlob);
     const videosCollectionRef = collection(db, "videos");
     const videoData = {
       name: uniqueVideoName,
-      user: auth.currentUser.uid,
+      user: currentUser.uid,
       location,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
-    await addDoc(videosCollectionRef, videoData);
-    return videoData;
+    const result = await addDoc(videosCollectionRef, videoData);
+    return { videoData, result };
   },
 };

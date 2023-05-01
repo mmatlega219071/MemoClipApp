@@ -38,7 +38,7 @@
   <p><input type="text" placeholder="Imię" v-model="firstName" /></p>
   <p><input type="text" placeholder="Nazwisko" v-model="lastName" /></p>
   <p><input type="text" placeholder="Email" v-model="email" /></p>
-  <p><input type="text" placeholder="Hasło" v-model="password" /></p>
+  <p><input type="password" placeholder="Hasło" v-model="password" /></p>
   <p><button @click="register">Zarejestruj</button></p>
   <p>
     <button @click="registerWithGoogle">
@@ -60,6 +60,8 @@ const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
 const password = ref("");
+
+const isLoggedIn = false;
 
 const register = async () => {
   try {

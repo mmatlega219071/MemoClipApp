@@ -78,8 +78,13 @@ onMounted(() => {
 });
 
 const handleSignOut = async () => {
-  await signOut();
-  router.push("/");
+  try {
+    await signOut();
+    console.log("Wylogowano");
+    router.push("/");
+  } catch (err) {
+    console.error(err);
+  }
 };
 </script>
 
@@ -133,11 +138,11 @@ export default {
           saveButton.textContent = "Zapisz";
           saveButton.addEventListener("click", async () => {
             try {
-              await saveVideoWithLocation(
+              const result = await saveVideoWithLocation(
                 recordedChunks,
                 await this.getLocation()
               );
-              console.log("zapisano nagranie");
+              console.log("zapisano nagranie", result);
             } catch (err) {
               console.error(err);
               alert("Błąd przy zapisywaniu nagrania");
