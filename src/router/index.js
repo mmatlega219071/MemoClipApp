@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import axios from 'axios';
 import Home from '../components/Home.vue';
 import VideoList from '../components/VideoList.vue';
 import RecordVideo from '../components/RecordVideo.vue';

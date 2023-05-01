@@ -51,12 +51,11 @@
 
 <script setup>
 /* eslint-disable no-unused-vars */
-
 import router from "@/router";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, collection, doc, setDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import axios from "axios";
 import { ref } from "vue";
 import { getMessaging, getToken } from "firebase/messaging";
+import { application, messaging, firebaseConfig } from '../main'
 
 const firstName = ref("");
 const lastName = ref("");
@@ -64,89 +63,42 @@ const email = ref("");
 const password = ref("");
 const errMsg = ref("");
 
-const db = getFirestore();
-
-const saveFcmToken = async (uid) => {
+const register = async () => {
     try {
-      const messaging = getMessaging();
+        console.log("działam - rejestracja użytkownika");
 
-      await getToken(messaging, { vapidKey: 'BEDx7wtlLuCEEUsfDz2DrsKMW4FYzmZg4o2p6mjHHt8cgkXl85gJnk8ktEDxv_fTh9tmLoMZZMlINFMA-ntEumM' })
-        .then((token) => {
-          if (token) {
-            console.log("FCM token:", token);
-            const usersCollection = collection(db, "users");
-            const userDoc = doc(usersCollection, uid);
-            updateDoc(userDoc, { fcmToken: token });
-          } else {
-            console.log('Brak dostępnego tokenu rejestracji');
-          } })
-        .catch((error) => {
-          console.log('Błąd przetwarzania tokenu rejestracyjnego:', error);
+        const response = await axios.post("/register", {
+            firstName: firstName.value,
+            lastName: lastName.value,
+            email: email.value,
+            password: password.value,
         });
+
+        console.log("Użytkownik dodany");
+        console.log(response);
+        console.log(response.data.userID)
+
+        router.push("/");
+        console.log('Przechodzę do handle ...')
+        handleRegistration(response.data.userID)
+        console.log('Wykonałem handle ...')
     } catch (error) {
-        console.log("Błąd przetwarzania tokenu rejestracyjnego:", error);
+        console.log(error + "o kurde nie działa");
     }
 };
 
-const register = () => {
-    const auth = getAuth();
-    const db = getFirestore();
+async function handleRegistration(userId) {
+  // Pobranie tokena rejestracji
+  const registrationToken = await getToken(messaging, {
+    vapidKey: firebaseConfig.vapidKey,
+  });
 
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then(async (user) => {
-            console.log("Pomyślnie dodano użytkownika: ", user.user.uid);
-
-            const usersCollection = collection(db, "users");
-            const userDoc = doc(usersCollection, user.user.uid);
-
-            const userData = {
-                firstName: firstName.value,
-                lastName: lastName.value,
-                email: email.value,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp(),
-            };
-
-            await setDoc(userDoc, userData);
-            await saveFcmToken(user.user.uid);
-
-            router.push("/");
-            console.log("Użytkownik dodany");
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-};
+  // Wysłanie tokenu do serwera
+  await axios.post('/token', { registrationToken, userId });
+}
 
 const registerWithGoogle = () => {
-    const db = getFirestore();
-    const provider = new GoogleAuthProvider();
-
-    signInWithPopup(getAuth(), provider)
-        .then(async (result) => {
-            const usersCollection = collection(db, "users");
-            const userDoc = doc(usersCollection, result.user.uid);
-
-            const user = result.user;
-            const [firstName, lastName] = user.displayName.split(" ");
-            const email = user.email;
-
-            const userData = {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                createdAt: serverTimestamp(),
-                updatedAt: serverTimestamp(),
-            };
-
-            await setDoc(userDoc, userData);
-            await saveFcmToken(result.user.uid);
-
-            router.push("/");
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    // Implementacja logowania za pomocą konta Google
 };
 </script>
 
