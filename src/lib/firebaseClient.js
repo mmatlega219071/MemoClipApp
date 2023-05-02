@@ -19,6 +19,8 @@ import {
 } from "firebase/firestore";
 
 import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import { getMessaging } from "firebase/messaging";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
   authDomain: "memoclip-e3cdb.firebaseapp.com",
@@ -27,12 +29,15 @@ const firebaseConfig = {
   messagingSenderId: "914216404911",
   appId: "1:914216404911:web:64daa30c06d488247b115a",
   measurementId: "G-Z73XMP1X9G",
+  vapidKey: "BHWHMZYZpDjHC3ZS3MnOJ8n0nnOt7PsIsLCY9vwWhOCV85FDjKKyN4P7qFbcXSQwy2hexZ9lgZkQ_8FPra8aph4"
 };
 
 // Initialize Firebase
 const application = initializeApp(firebaseConfig);
 const db = getFirestore();
 getAuth(application);
+
+const messaging = getMessaging(application);
 
 export default {
   async createUserWithEmailAndPassword(email, password, firstName, lastName) {
@@ -109,4 +114,6 @@ export default {
     const result = await addDoc(videosCollectionRef, videoData);
     return { videoData, result };
   },
+
+  messaging, firebaseConfig
 };

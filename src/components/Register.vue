@@ -53,11 +53,11 @@ import router from "@/router";
 import axios from "axios";
 import { ref } from "vue";
 import { getMessaging, getToken } from "firebase/messaging";
-import { application, messaging, firebaseConfig } from '../main'
-import { ref } from "vue";
 import {
   createUserWithEmailAndPassword,
   createUserWithGoogleProvider,
+  messaging,
+  firebaseConfig
 } from "../lib/memoClipApiClient";
 
 const firstName = ref("");
@@ -77,6 +77,7 @@ const register = async () => {
         });
         handleRegistration(response.data.userID)
         console.log("Użytkownik dodany");
+        console.log(response);
 
         router.push("/");
     } catch (error) {
