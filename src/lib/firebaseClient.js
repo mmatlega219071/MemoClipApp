@@ -16,6 +16,9 @@ import {
   getFirestore,
   serverTimestamp,
   setDoc,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 
 import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
@@ -108,5 +111,13 @@ export default {
     };
     const result = await addDoc(videosCollectionRef, videoData);
     return { videoData, result };
+  },
+
+  async listUserVideos() {
+    const { currentUser } = getAuth();
+    const videosCollectionRef = collection(db, "videos");
+    const q = query(videosCollectionRef, where("user", "==", currentUser.uid));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot;
   },
 };
