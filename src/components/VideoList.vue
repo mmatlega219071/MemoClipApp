@@ -28,6 +28,11 @@
         </ul>
       </div>
       <div>Video List</div>
+      <ul>
+        <li v-for="video in videos" :key="video.videoURL">
+          <video controls :src="video.videoURL" autoplay="false"></video>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -36,10 +41,14 @@
 import { listUserVideos } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
-  // JavaScript
+  data() {
+    return {
+      videos: [],
+    };
+  },
+
   async mounted() {
-    const list = await listUserVideos();
-    console.log(list);
+    this.videos = await listUserVideos();
   },
 };
 </script>
