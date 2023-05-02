@@ -30,3 +30,7 @@ export async function createUserWithGoogleProvider(providerName) {
 export async function signInWithEmailAndPassword(email, password) {
   return firebaseClient.signInWithEmailAndPassword(email, password);
 }
+
+export async function listUserVideos() {
+  return firebaseClient.listUserVideos();
+}
