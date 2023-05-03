@@ -36,5 +36,5 @@ notificationTimes.forEach((time) => {
 // Eksport funkcji, jeśli chciałbyś ją wywołać ręcznie
 exports.sendNotifications = functions.https.onRequest(async (req, res) => {
   await sendNotificationsToAllUsers();
-  res.send("Powiadomienia wysłane");
+  res.send("Powiadomienia wysłane :)");
 });
