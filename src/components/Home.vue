@@ -27,7 +27,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
-              >Settings</router-link
+              >Settings App - test</router-link
             >
           </li>
           <li class="nav-item">
