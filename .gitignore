@@ -3,7 +3,7 @@ node_modules
 /dist
 
 # secret folder
-secrets/
+/secrets
 
 # local env files
 .env.local
