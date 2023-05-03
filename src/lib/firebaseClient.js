@@ -19,6 +19,8 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 import {
@@ -26,6 +28,7 @@ import {
   ref as storageRef,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 
 import { getMessaging } from "firebase/messaging";
@@ -38,7 +41,8 @@ const firebaseConfig = {
   messagingSenderId: "914216404911",
   appId: "1:914216404911:web:64daa30c06d488247b115a",
   measurementId: "G-Z73XMP1X9G",
-  vapidKey: "BHWHMZYZpDjHC3ZS3MnOJ8n0nnOt7PsIsLCY9vwWhOCV85FDjKKyN4P7qFbcXSQwy2hexZ9lgZkQ_8FPra8aph4"
+  vapidKey:
+    "BHWHMZYZpDjHC3ZS3MnOJ8n0nnOt7PsIsLCY9vwWhOCV85FDjKKyN4P7qFbcXSQwy2hexZ9lgZkQ_8FPra8aph4",
 };
 
 // Initialize Firebase
@@ -132,17 +136,30 @@ export default {
     const q = query(videosCollectionRef, where("user", "==", currentUser.uid));
     const querySnapshot = await getDocs(q);
 
-    const list = querySnapshot.docs.map((doc) => doc.data());
+    const list = querySnapshot.docs.map((doc) => [doc.data(), doc.id]);
     const userVideosOutput = [];
     for (const item of list) {
-      const videoURL = await getDownloadURL(storageRef(storage, item.name));
+      const videoURL = await getDownloadURL(storageRef(storage, item[0].name));
       userVideosOutput.push({
         videoURL,
-        createdAt: new Date(item.createdAt.seconds * 1000),
+        createdAt: new Date(item[0].createdAt.seconds * 1000),
+        docId: item[1],
       });
+      console.log(item);
     }
     return userVideosOutput;
   },
 
-  messaging, firebaseConfig
+  async deleteVideo(docId) {
+    const videoRecordRef = doc(db, "videos", docId);
+    const videoSnap = (await getDoc(videoRecordRef)).data();
+    const storage = getStorage();
+    const videoRef = storageRef(storage, videoSnap.name);
+    await deleteObject(videoRef);
+    await deleteDoc(videoRecordRef);
+    // File deleted successfully
+  },
+
+  messaging,
+  firebaseConfig,
 };

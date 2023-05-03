@@ -31,6 +31,7 @@
       <ul>
         <li v-for="video in videos" :key="video.videoURL">
           <video controls :src="video.videoURL" autoplay="false"></video>
+          <button @click="deleteThisVideo(video.docId)">delete</button>
         </li>
       </ul>
     </div>
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import { listUserVideos } from "../lib/memoClipApiClient";
+import { listUserVideos, deleteVideo } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
   data() {
@@ -49,6 +50,11 @@ export default {
 
   async mounted() {
     this.videos = await listUserVideos();
+  },
+  methods: {
+    async deleteThisVideo(docId) {
+      return deleteVideo(docId);
+    },
   },
 };
 </script>
