@@ -71,7 +71,7 @@ const register = async () => {
     try {
         console.log("rejestracja użytkownika");
 
-        const response = await axios.post("/register", {
+        const response = await axios.post("/api/register", {
             firstName: firstName.value,
             lastName: lastName.value,
             email: email.value,
@@ -96,7 +96,7 @@ async function handleRegistration(userId) {
   });
 
   // Wysłanie tokenu do serwera
-  await axios.post('/token', { registrationToken, userId });
+  await axios.post('/api/token', { registrationToken, userId });
 }
 
 const isLoggedIn = false;

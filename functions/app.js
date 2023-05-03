@@ -7,7 +7,7 @@ const path = require('path');
 app.use(express.json());
 
 // API routes
-const apiRoutes = require('./routes/api');
+const apiRoutes = require('./server/routes/api');
 app.use('/api', apiRoutes); // dodaj prefix /api dla ścieżek API
 
 // Serve static files from the Vue app
