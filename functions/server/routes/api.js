@@ -9,7 +9,7 @@ admin.initializeApp({
 });
 
 // API 
-router.post('/register', async (req, res) => {
+router.post('/api/register', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
@@ -38,7 +38,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Endpoint do zapisu tokenu rejestracji dla konkretnego użytkownika
-router.post('/token', async (req, res) => {
+router.post('/api/token', async (req, res) => {
     try {
     const { registrationToken, userId } = req.body;
     const db = admin.firestore();

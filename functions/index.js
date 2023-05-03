@@ -4,8 +4,6 @@ const cron = require("node-cron");
 const app = require('./app');
 admin.initializeApp();
 
-exports.api = functions.https.onRequest(app);
-
 // Ustawienia harmonogramu powiadomień
 const notificationTimes = ["0 8 * * *", "0 11 * * *"];
 
@@ -41,3 +39,5 @@ exports.sendNotifications = functions.https.onRequest(async (req, res) => {
   await sendNotificationsToAllUsers();
   res.send("Powiadomienia wysłane :)");
 });
+
+exports.api = functions.https.onRequest(app);
