@@ -4,6 +4,10 @@ const cron = require("node-cron");
 const app = require('./app');
 const express = require('express');
 const router = express.Router();
+const cors = require("cors");
+
+router.use(cors());
+
 admin.initializeApp();
 
 // Ustawienia harmonogramu powiadomień
