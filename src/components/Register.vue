@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <!-- kontener przy zmniejszeniu lista -->
-      <router-link class="navbar-brand" to="/">Home</router-link>
+      <router-link class="navbar-brand" to="/welcome">Back </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -17,34 +17,29 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/video-list"
-              >Video List</router-link
-            >
+            <router-link class="nav-link" to="/video-list">Video List</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/record-video"
-              >Record Video</router-link
-            >
-          </li>
         </ul>
       </div>
-      <div>Settings</div>
     </div>
   </nav>
-  <h2>Zarejestruj się</h2>
-  <p><input type="text" placeholder="Imię" v-model="firstName" /></p>
-  <p><input type="text" placeholder="Nazwisko" v-model="lastName" /></p>
-  <p><input type="text" placeholder="Email" v-model="email" /></p>
-  <p><input type="password" placeholder="Hasło" v-model="password" /></p>
-  <p><button @click="register">Zarejestruj</button></p>
-  <p>
-    <button @click="registerWithGoogle">
-      Zarejestruj się za pomocą konta Google
-    </button>
-  </p>
+  <div class="mb-3"></div>
+  <h2>Sign on</h2>
+    <p><input type="text" placeholder="Name" v-model="firstName" />
+    </p>
+    <p><input type="text" placeholder="Surname" v-model="lastName" />
+    </p>
+    <p><input type="text" placeholder="Email" v-model="email" />
+    </p>
+    <p><input type="password" placeholder="Password" v-model="password" />
+    </p>
+    <p><button type="button" class="btn btn-primary" @click="register">Sign on</button>
+    </p>
+    <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
+    </p>
 </template>
 
 <script setup>
@@ -69,7 +64,7 @@ const password = ref("");
 
 const register = async () => {
     try {
-        console.log("rejestracja użytkownika");
+        console.log("User registrations");
 
         const response = await axios.post("/register", {
             firstName: firstName.value,
@@ -78,7 +73,7 @@ const register = async () => {
             password: password.value,
         });
         handleRegistration(response.data.userID)
-        console.log("Użytkownik dodany");
+        console.log("User added");
         console.log(response);
 
         router.push("/");
@@ -105,10 +100,10 @@ const registerWithGoogle = async () => {
   try {
     await createUserWithGoogleProvider();
     router.push("/");
-    console.log("Użytkownik dodany");
+    console.log("User added");
   } catch (err) {
     console.error(err);
-    alert("Błąd dodawania użytkownika");
+    alert("User adding error");
   }
 };
 </script>

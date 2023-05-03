@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Home</router-link>
+      <router-link class="navbar-brand" to="/welcome">Back </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -15,27 +15,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/video-list"
-              >Video List</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/record-video"
-              >Record Video</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings"
-              >Settings</router-link
-            >
-          </li>
+          <li class="nav-item"><router-link class="nav-link" to="/video-list">Video List</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" to="/app-settings">Settings</router-link></li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="container mt-3">
-    <h2 class="text-center">Zaloguj się</h2>
+    <h2 class="text-center">Log in</h2>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <form>
@@ -49,7 +36,7 @@
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Hasło</label>
+            <label for="password" class="form-label">Password</label>
             <input
               type="password"
               class="form-control"
@@ -59,11 +46,11 @@
           </div>
           <div class="d-grid gap-2">
             <button type="button" class="btn btn-primary" @click="register">
-              Zaloguj
+              Log in
             </button>
             <router-link to="/register">
               <button type="button" class="btn btn-secondary">
-                Nie masz konta? Zarejestruj się już teraz!
+                You do not have an account? Click here to register 
               </button>
             </router-link>
           </div>
