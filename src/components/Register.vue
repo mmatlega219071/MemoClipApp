@@ -86,6 +86,8 @@ const register = async () => {
 };
 
 async function handleRegistration(userId) {
+  console.log(userId);
+  console.log('testowe działanie')
   // Pobranie tokena rejestracji
   const registrationToken = await getToken(messaging, {
     vapidKey: firebaseConfig.vapidKey,
