@@ -4,7 +4,7 @@ const cron = require("node-cron");
 admin.initializeApp();
 
 // Ustawienia harmonogramu powiadomień
-const notificationTimes = ["0 8 * * *", "0 22 * * *"];
+const notificationTimes = ["0 8 * * *", "0 11 * * *"];
 
 // Treść powiadomienia
 const payload = {
@@ -21,6 +21,7 @@ async function sendNotificationsToAllUsers() {
     const user = userDoc.data();
     if (user.fcmToken) {
       await admin.messaging().sendToDevice(user.fcmToken, payload);
+      console.log(user.fcmToken)
     }
   }
 }
