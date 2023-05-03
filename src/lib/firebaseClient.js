@@ -28,6 +28,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
+import { getMessaging } from "firebase/messaging";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
   authDomain: "memoclip-e3cdb.firebaseapp.com",
