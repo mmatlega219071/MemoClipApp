@@ -1,7 +1,10 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cron = require("node-cron");
+const app = require('./app');
 admin.initializeApp();
+
+exports.api = functions.https.onRequest(app);
 
 // Ustawienia harmonogramu powiadomień
 const notificationTimes = ["0 8 * * *", "0 11 * * *"];
