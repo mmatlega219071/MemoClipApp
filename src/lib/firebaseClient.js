@@ -16,10 +16,17 @@ import {
   getFirestore,
   serverTimestamp,
   setDoc,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 
-import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
-import { getMessaging } from "firebase/messaging";
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
@@ -113,6 +120,26 @@ export default {
     };
     const result = await addDoc(videosCollectionRef, videoData);
     return { videoData, result };
+  },
+
+  async listUserVideos() {
+    const { currentUser } = getAuth();
+    const storage = getStorage();
+
+    const videosCollectionRef = collection(db, "videos");
+    const q = query(videosCollectionRef, where("user", "==", currentUser.uid));
+    const querySnapshot = await getDocs(q);
+
+    const list = querySnapshot.docs.map((doc) => doc.data());
+    const userVideosOutput = [];
+    for (const item of list) {
+      const videoURL = await getDownloadURL(storageRef(storage, item.name));
+      userVideosOutput.push({
+        videoURL,
+        createdAt: new Date(item.createdAt.seconds * 1000),
+      });
+    }
+    return userVideosOutput;
   },
 
   messaging, firebaseConfig

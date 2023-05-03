@@ -31,5 +31,9 @@ export async function signInWithEmailAndPassword(email, password) {
   return firebaseClient.signInWithEmailAndPassword(email, password);
 }
 
+export async function listUserVideos() {
+  return firebaseClient.listUserVideos();
+}
+
 export const messaging = firebaseClient.messaging;
 export const firebaseConfig = firebaseClient.firebaseConfig
