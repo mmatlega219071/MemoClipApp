@@ -17,11 +17,7 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <router-link class="nav-link" to="/video-list">Video List</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/record-video">Record Video</router-link>
-          </li>
-          
+          </li>          
         </ul>
       </div>
     </div>

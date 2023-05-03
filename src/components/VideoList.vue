@@ -19,12 +19,16 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Settings</router-link>
           </li>
-        <li v-for="video in videos" :key="video.videoURL">
-          <video controls :src="video.videoURL" autoplay="false"></video>
-        </li>
       </ul>
     </div>
   </nav>
+      <div class="row">
+        <div v-for="video in videos" :key="video.videoURL">
+          <div class="video-wrapper"></div>
+            <video controls :src="video.videoURL" autoplay="false"></video>
+          <div>data</div>
+        </div>
+      </div>
 </template>
 
 <script>
@@ -42,4 +46,24 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.video-wrapper {
+  position: static;
+  max-width: 100%;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+.row video {
+max-width: 75%;
+height: auto;
+}
+}
+<>przy ruszaniu zmienia sie 
+</style>

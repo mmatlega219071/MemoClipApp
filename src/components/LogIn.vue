@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/welcome">Back </router-link>
       <button
@@ -44,14 +44,10 @@
               v-model="password"
             />
           </div>
-          <div class="d-grid gap-2">
-            <button type="button" class="btn btn-primary" @click="register">
-              Log in
-            </button>
+          <div class="d-grid gap-2 text-center">
+            <button type="button" class="btn btn-primary" @click="register">Log in</button>
             <router-link to="/register">
-              <button type="button" class="btn btn-secondary">
-                You do not have an account? Click here to register 
-              </button>
+              <button type="button" class="btn btn-secondary"> You do not have an account? Click here to register </button>
             </router-link>
           </div>
           <p class="text-danger">{{ errMsg }}</p>
@@ -91,6 +87,8 @@ const register = async () => {
   }
 };
 </script>
+
 <style scoped>
-/* brak stylów */
+
+
 </style>
