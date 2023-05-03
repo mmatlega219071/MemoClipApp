@@ -71,7 +71,7 @@ const register = async () => {
     try {
         console.log("rejestracja użytkownika");
 
-        const response = await axios.post("/api/register", {
+        const response = await axios.post("/register", {
             firstName: firstName.value,
             lastName: lastName.value,
             email: email.value,
