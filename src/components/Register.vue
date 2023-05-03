@@ -60,7 +60,7 @@ import {
   firebaseConfig
 } from "../lib/memoClipApiClient";
 
-axios.defaults.baseURL = 'https://memoclip-e3cdb.web.app';
+axios.defaults.baseURL = 'https://us-central1-memoclip-e3cdb.cloudfunctions.net';
 
 const firstName = ref("");
 const lastName = ref("");
