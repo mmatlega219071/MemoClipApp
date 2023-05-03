@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .div-class {
-    height: 100vh;
+    height: 1000vh;
     min-height: 00px; /* Change the value as needed */
     margin: 0;
     padding: 0;

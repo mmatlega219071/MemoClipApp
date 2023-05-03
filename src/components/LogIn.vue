@@ -27,18 +27,18 @@
       <div class="col-md-6">
         <form>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
             <input
               type="email"
+              placeholder="Email adress"
               class="form-control"
               id="email"
               v-model="email"
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
             <input
               type="password"
+              placeholder="Password"
               class="form-control"
               id="password"
               v-model="password"
@@ -69,19 +69,19 @@ const router = useRouter();
 const register = async () => {
   try {
     await signInWithEmailAndPassword(email.value, password.value);
-    console.log("Zalogowano pomyślnie");
+    console.log("Log in succesfull");
     router.push("/");
   } catch (error) {
     console.log(error.code);
     switch (error.code) {
       case "auth/invalid-email":
-        errMsg.value = "Niepoprawny email";
+        errMsg.value = "Wrong email";
         break;
       case "auth/user-not-found":
-        errMsg.value = "Nie znaleziono użytkownika o podanym adresie email";
+        errMsg.value = "User with given email address not found";
         break;
       default:
-        errMsg.value = "Email lub hasło jest niepoprawne";
+        errMsg.value = "Email or password is incorrect";
         break;
     }
   }

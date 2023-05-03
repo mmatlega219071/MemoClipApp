@@ -65,5 +65,5 @@ max-width: 75%;
 height: auto;
 }
 }
-<>przy ruszaniu zmienia sie 
+
 </style>
