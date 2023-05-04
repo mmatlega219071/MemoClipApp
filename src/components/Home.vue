@@ -102,7 +102,6 @@ export default {
     async startRecording() {
       alert("Recording started :)");
       // Tutaj kod obsługujący nagrywanie filmiku
-
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
@@ -234,7 +233,12 @@ export default {
   left: 0;
   right: 0;
 }
-
+.navbar{
+  position: absolute;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+}
 .record-buttons-container button {
   margin: 0 10px;
 }

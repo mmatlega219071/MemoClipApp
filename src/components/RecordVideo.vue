@@ -21,7 +21,6 @@
           <li class="nav-item">
             <router-link to="/video-list" class="nav-link">Video List</router-link>
           </li>
-          
         </ul>
       </div>
     </div>
