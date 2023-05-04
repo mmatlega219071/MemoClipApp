@@ -64,11 +64,14 @@
 import { onMounted, ref } from "vue";
 import {
   onAuthStateChanged,
-  saveVideoWithLocation,
   signOut,
+  saveVideoWithLocation,
 } from "../lib/memoClipApiClient";
 import router from "../router";
+import axios from "axios";
 
+axios.defaults.baseURL =
+  "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 const isLoggedIn = ref(false);
 
 onMounted(() => {
@@ -108,8 +111,6 @@ export default {
   },
   methods: {
     async startRecording() {
-      alert("Recording started :)");
-
       // Tutaj kod obsługujący nagrywanie filmiku
 
       try {
