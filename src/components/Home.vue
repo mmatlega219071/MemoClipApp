@@ -2,11 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"
-        ><img
-          src="../../public/img/icons/MemoClip-128x128.png"
-          alt="App Logo"
-          class="logo"
-      /></router-link>
+        ><img src="../../public/img/icons/AppIcon.png" alt="AppIcon" class="logo" /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -22,8 +18,7 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link"
-              >Video list</router-link
-            >
+              >Video list</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
@@ -32,8 +27,7 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/welcome"
-              >Welcome Site</router-link
-            >
+              >Welcome Site</router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -42,7 +36,7 @@
             <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <a class="nav-link btn btn-link" @click="handleSignOut">Wyloguj</a>
+            <a class="nav-link btn btn-link" @click="handleSignOut">Sign out</a>
           </li>
         </ul>
       </div>
@@ -53,6 +47,10 @@
   </div>
   <div class="footer">
     <button class="record-button" @click="startRecording"></button>
+  </div>
+  <div class="record-buttons-container">
+    <button class="btn btn-secondary" @click="saveVideo">Save</button>
+    <button class="btn btn-secondary" @click="deleteVideo">Delete</button>
   </div>
 </template>
 
@@ -82,7 +80,7 @@ onMounted(() => {
 const handleSignOut = async () => {
   try {
     await signOut();
-    console.log("Wylogowano");
+    console.log("Logged out");
     router.push("/");
   } catch (err) {
     console.error(err);
@@ -104,7 +102,6 @@ export default {
   },
   methods: {
     async startRecording() {
-      alert("Rozpoczynam nagrywanie :)");
       // Tutaj kod obsługujący nagrywanie filmiku
 
       try {
@@ -137,7 +134,7 @@ export default {
 
           // Dodaj przyciski Zapisz i Odrzuć
           const saveButton = document.createElement("button");
-          saveButton.textContent = "Zapisz";
+          saveButton.textContent = "Save";
           saveButton.addEventListener("click", async () => {
             try {
               const location = await this.getLocation();
@@ -145,15 +142,15 @@ export default {
               console.log("zapisano nagranie", result);
             } catch (err) {
               console.error(err);
-              alert("Błąd przy zapisywaniu nagrania");
+              alert("Video saving error");
             }
           });
 
           const discardButton = document.createElement("button");
-          discardButton.textContent = "Odrzuć";
+          discardButton.textContent = "Delete";
           discardButton.addEventListener("click", function () {
             // Kod obsługujący odrzucanie nagrania
-            console.log("Odrzucam nagranie...");
+            console.log("Deleting file...");
           });
 
           const buttonContainer = document.createElement("div");
@@ -193,12 +190,12 @@ export default {
 
 <style scoped>
 .container-fluid img {
-  max-height: 40px;
+  max-height: 45px;
+  max-width: 45px;
 }
 .video-container {
   width: 100%;
   height: calc(100vh - 216px);
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #000;
@@ -215,7 +212,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0 50px 0;
+  padding: 10px 0 50px 0;
   background-color: #000;
 }
 
@@ -227,4 +224,27 @@ export default {
   border: 5px solid #fff;
   color: #fff;
 }
+
+.record-buttons-container {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.record-buttons-container button {
+  margin: 0 10px;
+}
+.record-buttons-container {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 20px;
+}
+
 </style>

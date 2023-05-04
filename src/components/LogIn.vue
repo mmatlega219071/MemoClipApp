@@ -1,7 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Home</router-link>
+      <router-link class="navbar-brand" to="/welcome"><img
+          src="../../public/img/icons/return.png"
+          alt="ReturnButton"
+          class="logo"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -15,56 +19,39 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/video-list"
-              >Video List</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/record-video"
-              >Record Video</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings"
-              >Settings</router-link
-            >
-          </li>
+          <li class="nav-item"><router-link class="nav-link" to="/video-list">Video List</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" to="/app-settings">Settings</router-link></li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="container mt-3">
-    <h2 class="text-center">Zaloguj się</h2>
+    <h2 class="text-center">Log in</h2>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <form>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
             <input
               type="email"
+              placeholder="Email adress"
               class="form-control"
               id="email"
               v-model="email"
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Hasło</label>
             <input
               type="password"
+              placeholder="Password"
               class="form-control"
               id="password"
               v-model="password"
             />
           </div>
-          <div class="d-grid gap-2">
-            <button type="button" class="btn btn-primary" @click="register">
-              Zaloguj
-            </button>
+          <div class="d-grid gap-2 text-center">
+            <button type="button" class="btn btn-primary" @click="register">Log in</button>
             <router-link to="/register">
-              <button type="button" class="btn btn-secondary">
-                Nie masz konta? Zarejestruj się już teraz!
-              </button>
+              <button type="button" class="btn btn-secondary"> You do not have an account? Click here to register </button>
             </router-link>
           </div>
           <p class="text-danger">{{ errMsg }}</p>
@@ -86,24 +73,29 @@ const router = useRouter();
 const register = async () => {
   try {
     await signInWithEmailAndPassword(email.value, password.value);
-    console.log("Zalogowano pomyślnie");
+    console.log("Log in succesfull");
     router.push("/");
   } catch (error) {
     console.log(error.code);
     switch (error.code) {
       case "auth/invalid-email":
-        errMsg.value = "Niepoprawny email";
+        errMsg.value = "Wrong email";
         break;
       case "auth/user-not-found":
-        errMsg.value = "Nie znaleziono użytkownika o podanym adresie email";
+        errMsg.value = "User with given email address not found";
         break;
       default:
-        errMsg.value = "Email lub hasło jest niepoprawne";
+        errMsg.value = "Email or password is incorrect";
         break;
     }
   }
 };
 </script>
+
 <style scoped>
-/* brak stylów */
+.logo{
+  max-height: 30px;
+  max-width: 30px;
+}
+
 </style>

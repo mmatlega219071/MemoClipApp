@@ -1,3 +1,4 @@
+import { saveVideoWithLocation } from "./server/firebaseClient";
 import firebaseClient from "./server/firebaseClient";
 
 const functions = require("firebase-functions");
@@ -98,31 +99,16 @@ const { getFirestore, serverTimestamp, getStorage, ref, uploadBytes } = require(
 
 router.post('/save-video', async (req, res) => {
   try {
-    const recordedChunks = req.body.recordedChunks;
-    const location = req.body.location;
-    const storage = getStorage();
-    const db = getFirestore();
-
-    const dateFormatted = new Date()
-      .toISOString()
-      .split(".")
-      .at(0)
-      .replace(/:/g, "");
-    const { currentUser } = getAuth();
-    const uniqueVideoName = currentUser.uid + "-" + dateFormatted + ".mp4";
-    const videosRef = ref(storage, uniqueVideoName);
-    const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
-    await uploadBytes(videosRef, videoBlob);
-    const videosCollectionRef = collection(db, "videos");
-    const videoData = {
-      name: uniqueVideoName,
-      user: currentUser.uid,
-      location,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-    };
-    const result = await addDoc(videosCollectionRef, videoData);
-    res.send({ success: true, message: 'Video saved successfully.', videoData: videoData, result: result });
+    const { videoData, result } = await saveVideoWithLocation(
+      req.body.recordedChunks,
+      req.body.location
+    );
+    res.send({
+      success: true,
+      message: "Video saved successfully.",
+      videoData,
+      result,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send({ success: false, message: 'Error saving video.' });
