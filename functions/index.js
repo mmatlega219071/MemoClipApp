@@ -11,7 +11,7 @@ router.use(cors());
 admin.initializeApp();
 
 // Ustawienia harmonogramu powiadomień
-const notificationTimes = ["0 8 * * *", "0 11 * * *"];
+const notificationTimes = ["0 11 * * *"];
 
 // Treść powiadomienia
 const payload = {
