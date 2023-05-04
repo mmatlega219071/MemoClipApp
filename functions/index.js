@@ -1,3 +1,5 @@
+import firebaseClient from "./server/firebaseClient";
+
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cron = require("node-cron");
@@ -92,6 +94,42 @@ router.post('/token', async (req, res) => {
   }
 });
 
+const { getFirestore, serverTimestamp, getStorage, ref, uploadBytes } = require('firebase/storage');
+
+router.post('/save-video', async (req, res) => {
+  try {
+    const recordedChunks = req.body.recordedChunks;
+    const location = req.body.location;
+    const storage = getStorage();
+    const db = getFirestore();
+
+    const dateFormatted = new Date()
+      .toISOString()
+      .split(".")
+      .at(0)
+      .replace(/:/g, "");
+    const { currentUser } = getAuth();
+    const uniqueVideoName = currentUser.uid + "-" + dateFormatted + ".mp4";
+    const videosRef = ref(storage, uniqueVideoName);
+    const videoBlob = new Blob(recordedChunks, { type: "video/mp4" });
+    await uploadBytes(videosRef, videoBlob);
+    const videosCollectionRef = collection(db, "videos");
+    const videoData = {
+      name: uniqueVideoName,
+      user: currentUser.uid,
+      location,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+    const result = await addDoc(videosCollectionRef, videoData);
+    res.send({ success: true, message: 'Video saved successfully.', videoData: videoData, result: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ success: false, message: 'Error saving video.' });
+  }
+});
+
+
 router.get('/test', (req, res) => {
   console.log('GET /test ok');
   res.send('Test SERVER')
@@ -100,7 +138,7 @@ router.get('/test', (req, res) => {
 exports.api = functions.https.onRequest(router);
 
 
-// Eksport funkcji, jeśli chciałbyś ją wywołać ręcznie
+// Eksport funkcji, jeśli chcielibyśmy ją wywołać ręcznie
 exports.sendNotifications = functions.https.onRequest(async (req, res) => {
   await sendNotificationsToAllUsers();
   res.send("Powiadomienia wysłane :)");

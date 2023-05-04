@@ -64,7 +64,9 @@ import {
   signOut,
 } from "../lib/memoClipApiClient";
 import router from "../router";
+import axios from "axios";
 
+axios.defaults.baseURL = 'https://us-central1-memoclip-e3cdb.cloudfunctions.net/api';
 const isLoggedIn = ref(false);
 
 onMounted(() => {
@@ -138,10 +140,8 @@ export default {
           saveButton.textContent = "Zapisz";
           saveButton.addEventListener("click", async () => {
             try {
-              const result = await saveVideoWithLocation(
-                recordedChunks,
-                await this.getLocation()
-              );
+              const location = await this.getLocation();
+              const result = await axios.post("/save-video", {recordedChunks, location})
               console.log("zapisano nagranie", result);
             } catch (err) {
               console.error(err);
