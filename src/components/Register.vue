@@ -91,7 +91,7 @@ async function handleRegistration(userId) {
   });
 
   // Wysłanie tokenu do serwera
-  await axios.post('/api/token', { registrationToken, userId });
+  await axios.post('/token', { registrationToken, userId });
 }
 
 const isLoggedIn = false;
