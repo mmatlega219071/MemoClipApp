@@ -4,7 +4,7 @@
         <div class="div-class">
           <h1 class="header-1">
             <li class="nav-item-LogIn"><router-link to="/" class="navbar-brand">
-                <img src="../../public/img/icons/MemoClip-128x128.png" alt="App Logo" class="logo"/></router-link>
+              <img src="../../public/img/icons/AppIcon.png" alt="AppIcon" class="logo" /></router-link>
             </li>
             <li class="appName">Memoclip</li>
             <li class="nav-item-LogIn">Welcome!</li>
@@ -25,14 +25,12 @@ export default {
 
 <style scoped>
 .div-class {
-    height: 1000vh;
+    height: 500vh;
     min-height: 00px; /* Change the value as needed */
     margin: 0;
     padding: 0;
     color: #ffffff;
-
 }
-
 .header-1 {
     position: fixed;
     top: 50%;
@@ -40,7 +38,6 @@ export default {
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
 .nav-site {
     background-color: #343a40;/* Kolor tła  */
 }
@@ -52,7 +49,6 @@ export default {
   list-style-type: none;
   margin: 0 0.5rem;
 }
-
 .nav-link {
   color: #ffffff;
   font-size: 1.5rem;
@@ -60,23 +56,22 @@ export default {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
-
 .nav-link:hover {
   color: #343a40;
   background-color: #ffffff;
 }
-
+.logo{
+  width: 128px;
+  height: 128px;
+}
 @media screen and (max-width: 768px) {
   .header-1 {
     top: 50%;
   }
-
 }
-
 @media screen and (min-width: 768px) {
   .header-1 {
     top: 50%;
   }
-
 }
 </style>

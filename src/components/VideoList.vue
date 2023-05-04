@@ -19,27 +19,17 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Settings</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/record-video"
-              >Record Video</router-link
-            >
-          </li>
         </ul>
       </div>
-      <div>Video List</div>
-      <!-- <ul>
-        <li v-for="video in videos" :key="video.videoURL">
-          <video controls :src="video.videoURL" autoplay="false"></video> 
-          
-        </li>
-      </ul> -->
   </nav>
       <div class="row">
         <div v-for="video in videos" :key="video.videoURL">
-          <div class="video-wrapper"></div>
-            <video controls :src="video.videoURL" autoplay="false"></video>
-            <button @click="deleteThisVideo(video.docId)">delete</button>
-          <div>data</div>
+          <div class="col">data</div>
+          <div class="video-wrapper"><video controls :src="video.videoURL" autoplay="false"></video>
+            <div class="col"><button class="btn btn-secondary" @click="deleteThisVideo(video.docId)">delete</button>
+              <div class="w-100"></div>
+              </div>
+          </div>
         </div>
       </div>
 </template>
@@ -69,18 +59,28 @@ export default {
   position: static;
   max-width: 100%;
 }
+.w-100 {
+    border: 1px solid black;
+    margin: 10px 0;
+}
 
 .video-wrapper video {
-  width: 100%;
   height: auto;
   max-height: 400px;
   object-fit: contain;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 576px){
 .row video {
-max-width: 75%;
-height: auto;
+  min-width: 20%;
+  height: auto;
+}
+
+}
+@media (max-width: 992px) {
+.row video {
+  max-width: 80%;
+  height: auto;
 }
 }
 

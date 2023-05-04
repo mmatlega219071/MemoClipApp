@@ -2,11 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"
-        ><img
-          src="../../public/img/icons/MemoClip-128x128.png"
-          alt="App Logo"
-          class="logo"
-      /></router-link>
+        ><img src="../../public/img/icons/AppIcon.png" alt="AppIcon" class="logo" /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -195,7 +191,8 @@ export default {
 
 <style scoped>
 .container-fluid img {
-  max-height: 40px;
+  max-height: 45px;
+  max-width: 45px;
 }
 .video-container {
   width: 100%;

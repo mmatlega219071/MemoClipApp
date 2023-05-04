@@ -2,7 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <!-- kontener przy zmniejszeniu lista -->
-      <router-link class="navbar-brand" to="/welcome">Back </router-link>
+      <router-link class="navbar-brand" to="/welcome"><img
+          src="../../public/img/icons/return.png"
+          alt="ReturnButton"
+          class="logo"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -115,5 +119,8 @@ export default {
 </script>
 
 <style scoped>
-
+.logo{
+  max-height: 30px;
+  max-width: 30px;
+}
 </style>

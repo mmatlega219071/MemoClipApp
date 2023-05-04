@@ -22,6 +22,13 @@
       </div>
     </div>
   </nav>
+  <div>Created by:</div>
+  <li>Mateusz Matlega</li>
+  <li>Kamila Cikowska-Matoga</li>
+  <li>Karol Kozioł</li>
+  <div>Credits:</div>
+    <li><a target="_blank" href="https://icons8.com/icon/3483/return">Return</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></li>
+    <li><a target="_blank" href="https://www.flaticon.com/free-icons/camera" title="camera icons"></a>Camera icons created by Fathema Khanom - Flaticon</li>
 </template>
 
 <script>
