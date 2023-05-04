@@ -19,8 +19,6 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Settings</router-link>
           </li>
-<<<<<<< HEAD
-=======
           <li class="nav-item">
             <router-link class="nav-link" to="/record-video"
               >Record Video</router-link
@@ -29,19 +27,18 @@
         </ul>
       </div>
       <div>Video List</div>
-      <ul>
+      <!-- <ul>
         <li v-for="video in videos" :key="video.videoURL">
-          <video controls :src="video.videoURL" autoplay="false"></video>
-          <button @click="deleteThisVideo(video.docId)">delete</button>
+          <video controls :src="video.videoURL" autoplay="false"></video> 
+          
         </li>
->>>>>>> main
-      </ul>
-    </div>
+      </ul> -->
   </nav>
       <div class="row">
         <div v-for="video in videos" :key="video.videoURL">
           <div class="video-wrapper"></div>
             <video controls :src="video.videoURL" autoplay="false"></video>
+            <button @click="deleteThisVideo(video.docId)">delete</button>
           <div>data</div>
         </div>
       </div>
