@@ -2,7 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"
-        ><img src="../../public/img/icons/AppIcon.png" alt="AppIcon" class="logo" /></router-link>
+        ><img
+          src="../../public/img/icons/AppIcon.png"
+          alt="AppIcon"
+          class="logo"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,7 +22,8 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/video-list" class="nav-link"
-              >Video list</router-link>
+              >Video list</router-link
+            >
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
@@ -27,7 +32,8 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/welcome"
-              >Welcome Site</router-link>
+              >Welcome Site</router-link
+            >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -48,9 +54,9 @@
   <div class="footer">
     <button class="record-button" @click="startRecording"></button>
   </div>
-  <div class="record-buttons-container">
-    <button class="btn btn-secondary" @click="saveVideo">Save</button>
+  <div class="record-buttons-container" v-if="isRecorded">
     <button class="btn btn-secondary" @click="deleteVideo">Delete</button>
+    <button class="btn btn-secondary" @click="saveVideo">Save</button>
   </div>
 </template>
 
@@ -87,20 +93,23 @@ const handleSignOut = async () => {
 </script>
 
 <script>
+const isRecorded = ref(false);
 export default {
   name: "HomeScreen",
   data() {
     return {
       recording: false,
-      chunks: [],
+      recordedChunks: [],
       mediaRecorder: null,
       videoURL: null,
       error: null,
+      isRecorded: false,
     };
   },
   methods: {
     async startRecording() {
       alert("Recording started :)");
+
       // Tutaj kod obsługujący nagrywanie filmiku
 
       try {
@@ -116,58 +125,75 @@ export default {
         }
         await video.play();
 
-        const recordedChunks = [];
+        this.recordedChunks = [];
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorder.addEventListener("dataavailable", (e) => {
           if (e.data.size > 0) {
-            recordedChunks.push(e.data);
+            this.recordedChunks.push(e.data);
           }
         });
 
         mediaRecorder.addEventListener("stop", () => {
-          const recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
+          const recordedBlob = new Blob(this.recordedChunks, {
+            type: "video/mp4",
+          });
           const recordedURL = window.URL.createObjectURL(recordedBlob);
           video.src = recordedURL;
           video.controls = true;
           video.play();
 
           // Dodaj przyciski Zapisz i Odrzuć
-          const saveButton = document.createElement("button");
-          saveButton.textContent = "Save";
-          saveButton.addEventListener("click", async () => {
-            try {
-              const result = await saveVideoWithLocation(
-                recordedChunks,
-                await this.getLocation()
-              );
-              console.log("Video saved", result);
-            } catch (err) {
-              console.error(err);
-              alert("Video saving error");
-            }
-          });
+          // const saveButton = document.createElement("button");
+          // saveButton.textContent = "Save";
+          // saveButton.addEventListener("click", async () => {
+          //   try {
+          //     const result = await saveVideoWithLocation(
+          //       this.recordedChunks,
+          //       await this.getLocation()
+          //     );
+          //     console.log("Video saved", result);
+          //   } catch (err) {
+          //     console.error(err);
+          //     alert("Video saving error");
+          //   }
+          // });
 
-          const discardButton = document.createElement("button");
-          discardButton.textContent = "Delete";
-          discardButton.addEventListener("click", function () {
-            // Kod obsługujący odrzucanie nagrania
-            console.log("Deleting file...");
-          });
+          // const discardButton = document.createElement("button");
+          // discardButton.textContent = "Delete";
+          // discardButton.addEventListener("click", function () {
+          //   // Kod obsługujący odrzucanie nagrania
+          //   console.log("Deleting file...");
+          // });
 
-          const buttonContainer = document.createElement("div");
-          buttonContainer.appendChild(saveButton);
-          buttonContainer.appendChild(discardButton);
-          video.parentElement.appendChild(buttonContainer);
+          // const buttonContainer = document.createElement("div");
+          // buttonContainer.appendChild(saveButton);
+          // buttonContainer.appendChild(discardButton);
+          // video.parentElement.appendChild(buttonContainer);
         });
 
         setTimeout(() => {
           mediaRecorder.stop();
           video.srcObject = null;
+          isRecorded.value = true;
         }, 2000);
 
         mediaRecorder.start();
       } catch (error) {
         console.error(error);
+      }
+    },
+
+    async saveVideo() {
+      try {
+        const result = await saveVideoWithLocation(
+          this.recordedChunks,
+          await this.getLocation()
+        );
+        console.log("Video saved", result);
+        alert("video saved");
+      } catch (err) {
+        console.error(err);
+        alert("Video saving error");
       }
     },
 
@@ -247,5 +273,4 @@ export default {
   right: 0;
   margin: 20px;
 }
-
 </style>
