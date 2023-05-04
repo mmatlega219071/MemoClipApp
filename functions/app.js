@@ -8,7 +8,7 @@ app.use(express.json());
 
 // API routes
 const apiRoutes = require('./server/routes/api');
-app.use('/', apiRoutes);
+app.use('/api', apiRoutes); // dodaj prefix /api dla ścieżek API
 
 // Serve static files from the Vue app
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -17,7 +17,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-// Starting the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Eksportuj aplikację Express
+module.exports = app;
+

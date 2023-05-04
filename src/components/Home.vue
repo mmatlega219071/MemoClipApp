@@ -26,7 +26,12 @@
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
+<<<<<<< HEAD
               >Settings</router-link>
+=======
+              >Settings App - test</router-link
+            >
+>>>>>>> main
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/welcome"

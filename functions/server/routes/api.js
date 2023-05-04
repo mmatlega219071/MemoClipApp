@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
-const serviceAccount = require('../../../secrets/memoclip-e3cdb-firebase-adminsdk-d5kj5-c5c6fb1c23.json');
+const serviceAccount = require('../../secrets/memoclip-e3cdb-firebase-adminsdk-d5kj5-c5c6fb1c23.json');
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://memoclip-e3cdb.firebaseio.com'
-});
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//     databaseURL: 'https://memoclip-e3cdb.firebaseio.com'
+// });
 
 // API 
-router.post('/register', async (req, res) => {
+router.post('/api/register', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     try {
@@ -38,7 +38,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Endpoint do zapisu tokenu rejestracji dla konkretnego użytkownika
-router.post('/token', async (req, res) => {
+router.post('/api/token', async (req, res) => {
     try {
     const { registrationToken, userId } = req.body;
     const db = admin.firestore();

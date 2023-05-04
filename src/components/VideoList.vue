@@ -19,6 +19,22 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Settings</router-link>
           </li>
+<<<<<<< HEAD
+=======
+          <li class="nav-item">
+            <router-link class="nav-link" to="/record-video"
+              >Record Video</router-link
+            >
+          </li>
+        </ul>
+      </div>
+      <div>Video List</div>
+      <ul>
+        <li v-for="video in videos" :key="video.videoURL">
+          <video controls :src="video.videoURL" autoplay="false"></video>
+          <button @click="deleteThisVideo(video.docId)">delete</button>
+        </li>
+>>>>>>> main
       </ul>
     </div>
   </nav>
@@ -32,7 +48,7 @@
 </template>
 
 <script>
-import { listUserVideos } from "../lib/memoClipApiClient";
+import { listUserVideos, deleteVideo } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
   data() {
@@ -42,6 +58,11 @@ export default {
   },
   async mounted() {
     this.videos = await listUserVideos();
+  },
+  methods: {
+    async deleteThisVideo(docId) {
+      return deleteVideo(docId);
+    },
   },
 };
 </script>
