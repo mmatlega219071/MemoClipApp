@@ -30,9 +30,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #ffffff;
-  background: linear-gradient(to right, #232526, #414345);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-  height: 100vh;
+  background: #232526;
+  height: 250vh;
 }
 </style>
