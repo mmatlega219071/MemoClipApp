@@ -6,7 +6,7 @@
             <li class="nav-item-LogIn"><router-link to="/" class="navbar-brand">
                 <img src="../../public/img/icons/MemoClip-128x128.png" alt="App Logo" class="logo"/></router-link>
             </li>
-            <li class="appName">Memoclip app</li>
+            <li class="appName">Memoclip</li>
             <li class="nav-item-LogIn">Welcome!</li>
             <li class="nav-item-LogIn"><router-link class="nav-link" to="/login">Log in</router-link></li>
             <li class="nav-item-LogIn"><router-link class="nav-link" to="/register">Sign on</router-link></li>
