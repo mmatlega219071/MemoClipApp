@@ -1,5 +1,4 @@
-import { saveVideoWithLocation } from "./server/firebaseClient";
-import firebaseClient from "./server/firebaseClient";
+const { saveVideoWithLocation } = require("./server/firebaseClient");
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
