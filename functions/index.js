@@ -19,27 +19,8 @@ const payload = {
     title: "Nagrywanie wideo",
     body: "Nie zapomnij nagrać swojego dzisiejszego wideo!",
   },
-  android: {
-    notification: {
-      vibrate_timings: [200000000],
-    },
-  },
-  apns: {
-    payload: {
-      aps: {
-        alert: {
-          title: "Nagrywanie wideo",
-          body: "Nie zapomnij nagrać swojego dzisiejszego wideo!",
-        },
-        sound: "default",
-        badge: 1,
-      },
-    },
-  },
-  webpush: {
-    notification: {
-      vibrate: [200],
-    },
+  data: {
+    vibration: "200",
   },
 };
 
