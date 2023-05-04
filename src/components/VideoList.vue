@@ -25,7 +25,7 @@
       <div class="row">
         <div v-for="video in videos" :key="video.videoURL">
           <div class="col">data</div>
-          <div class="video-wrapper"><video controls :src="video.videoURL" autoplay="false"></video>
+          <div class="video-wrapper"><video controls :src="video.videoURL"></video>
             <div class="col"><button class="btn btn-secondary" @click="deleteThisVideo(video.docId)">delete</button>
               <div class="w-100"></div>
               </div>
