@@ -1,9 +1,9 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cron = require("node-cron");
-const app = require('./app');
+// const app = require('./app');
 const express = require('express');
-const router = express.Router();
+const router = express();
 const cors = require("cors");
 
 router.use(cors());
@@ -89,13 +89,16 @@ router.post('/api/token', async (req, res) => {
   }
 });
 
+router.get('/test', (req, res) => {
+  console.log('GET /test ok');
+  res.send('Test SERVER')
+})
+
 exports.api = functions.https.onRequest(router);
 
 
 // Eksport funkcji, jeśli chciałbyś ją wywołać ręcznie
-exports.sendNotifications = functions.https.onRequest(async (req, res) => {
-  await sendNotificationsToAllUsers();
-  res.send("Powiadomienia wysłane :)");
-});
-
-//exports.api = functions.https.onRequest(app);
+// exports.sendNotifications = functions.https.onRequest(async (req, res) => {
+//   await sendNotificationsToAllUsers();
+//   res.send("Powiadomienia wysłane :)");
+// });
