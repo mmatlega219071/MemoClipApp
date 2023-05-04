@@ -58,7 +58,6 @@
 import { onMounted, ref } from "vue";
 import {
   onAuthStateChanged,
-  saveVideoWithLocation,
   signOut,
 } from "../lib/memoClipApiClient";
 import router from "../router";
