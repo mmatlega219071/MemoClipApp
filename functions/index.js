@@ -1,3 +1,6 @@
+import { saveVideoWithLocation } from "./server/firebaseClient";
+import firebaseClient from "./server/firebaseClient";
+
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cron = require("node-cron");
@@ -11,7 +14,7 @@ router.use(cors());
 admin.initializeApp();
 
 // Ustawienia harmonogramu powiadomień
-const notificationTimes = ["0 8 * * *", "0 11 * * *"];
+const notificationTimes = ["0 11 * * *"];
 
 // Treść powiadomienia
 const payload = {
@@ -92,6 +95,27 @@ router.post('/token', async (req, res) => {
   }
 });
 
+const { getFirestore, serverTimestamp, getStorage, ref, uploadBytes } = require('firebase/storage');
+
+router.post('/save-video', async (req, res) => {
+  try {
+    const { videoData, result } = await saveVideoWithLocation(
+      req.body.recordedChunks,
+      req.body.location
+    );
+    res.send({
+      success: true,
+      message: "Video saved successfully.",
+      videoData,
+      result,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ success: false, message: 'Error saving video.' });
+  }
+});
+
+
 router.get('/test', (req, res) => {
   console.log('GET /test ok');
   res.send('Test SERVER')
@@ -100,7 +124,7 @@ router.get('/test', (req, res) => {
 exports.api = functions.https.onRequest(router);
 
 
-// Eksport funkcji, jeśli chciałbyś ją wywołać ręcznie
+// Eksport funkcji, jeśli chcielibyśmy ją wywołać ręcznie
 exports.sendNotifications = functions.https.onRequest(async (req, res) => {
   await sendNotificationsToAllUsers();
   res.send("Powiadomienia wysłane :)");
