@@ -23,7 +23,7 @@ const {
   collection,
   doc,
   setDoc,
-} = require('firebase.firestore');
+} = require('firebase/firestore');
 
 router.use(cors());
 
