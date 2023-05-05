@@ -14,6 +14,8 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@firebase/auth": "^0.23.1",
+    "@firebase/firestore": "^3.11.0",
     "@firebase/storage": "^0.11.2",
     "cors": "^2.8.5",
     "firebase": "^9.19.1",
