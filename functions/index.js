@@ -97,7 +97,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Endpoint do rejestracji przez Google
-router.post('/google-register', async (req, res) => {
+router.get('/google-register', async (req, res) => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(getAuth(), provider);
 
