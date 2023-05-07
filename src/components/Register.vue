@@ -42,7 +42,7 @@
     </p>
     <p><button type="button" class="btn btn-primary" @click="register">Sign on</button>
     </p>
-    <p><button type="button" class="btn btn-secondary" @click="registerGoogle">Sign on using Google account</button>
+    <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
     </p>
 </template>
 
@@ -66,8 +66,6 @@ const lastName = ref("");
 const email = ref("");
 const password = ref("");
 
-const isLoggedIn = false;
-
 const register = async () => {
     try {
         console.log("User registrations");
@@ -88,17 +86,6 @@ const register = async () => {
     }
 };
 
-const registerGoogle = async () => {
-  try {
-    const response = axios.post("google-register");
-
-    console.log(response);
-
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 async function handleRegistration(userId) {
   console.log(userId);
   console.log('testowe działanie')
@@ -111,10 +98,11 @@ async function handleRegistration(userId) {
   await axios.post('/token', { registrationToken, userId });
 }
 
+const isLoggedIn = false;
+
 const registerWithGoogle = async () => {
   try {
-    const response = await createUserWithGoogleProvider();
-    console.log(response)
+    await createUserWithGoogleProvider();
     router.push("/");
     console.log("User added");
   } catch (err) {
