@@ -21,3 +21,8 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+app.get('/test', (req, res) => {
+  console.log('GET /test ok');
+  res.send('Test SERVER')
+})

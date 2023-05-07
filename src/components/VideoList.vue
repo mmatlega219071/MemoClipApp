@@ -24,9 +24,8 @@
   </nav>
       <div class="row">
         <div v-for="video in videos" :key="video.videoURL">
-          <div class="col">data</div>
           <div class="video-wrapper"><video controls :src="video.videoURL"></video>
-            <div class="col"><button class="btn btn-secondary" @click="deleteThisVideo(video.docId)">delete</button>
+            <div class="col"><button class="btn btn-danger" @click="deleteThisVideo(video.docId)">delete</button>
               <div class="w-100"></div>
               </div>
           </div>
@@ -35,7 +34,8 @@
 </template>
 
 <script>
-import { listUserVideos, deleteVideo } from "../lib/memoClipApiClient";
+import { listUserVideos } from "../lib/memoClipApiClient";
+import axios from "axios";
 export default {
   name: "VideoList",
   data() {
@@ -48,7 +48,12 @@ export default {
   },
   methods: {
     async deleteThisVideo(docId) {
-      return deleteVideo(docId);
+      try {
+        const response = await axios.delete('/delete/' + docId);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };

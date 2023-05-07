@@ -25,6 +25,11 @@
               >Video list</router-link
             >
           </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link to="/users-ranking" class="nav-link"
+              >Users raning </router-link
+            >
+          </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
               >Settings App - test</router-link
@@ -68,10 +73,9 @@ import {
   saveVideoWithLocation,
 } from "../lib/memoClipApiClient";
 import router from "../router";
-import axios from "axios";
+//import axios from "axios";
 
-axios.defaults.baseURL =
-  "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
+//axios.defaults.baseURL = "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 const isLoggedIn = ref(false);
 
 onMounted(() => {
@@ -273,5 +277,10 @@ export default {
   left: 0;
   right: 0;
   margin: 20px;
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
 }
 </style>

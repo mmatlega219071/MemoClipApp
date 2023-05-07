@@ -8,7 +8,8 @@ admin.initializeApp({
     databaseURL: 'https://memoclip-e3cdb.firebaseio.com'
 });
 
-// API 
+// API
+// Endpoint do rejestracji użytkownika 
 router.post('/register', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
@@ -58,6 +59,21 @@ router.post('/token', async (req, res) => {
     }
 });
 
+// Endpoint do usuwania wideo użytkownika
+router.delete('/delete/:videoId', async (req, res) => {
+    const { videoId } = req.params;
+    try {
+      await admin.firestore().collection('videos').doc(videoId).delete();
+      res.status(200).json({ message: `Wideo o ID ${videoId} został usunięty.` });
+    } catch (error) {
+      res.status(500).json({ message: 'Błąd podczas usuwania wideo.', error });
+    }
+});
+
+router.get('/test', (req, res) => {
+    console.log('GET /test ok');
+    res.send('Test SERVER')
+})
 
 module.exports = router;
 
