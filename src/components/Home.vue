@@ -235,7 +235,7 @@ export default {
 }
 .navbar{
   position: absolute;
-    z-index: 1;
+    z-index: 1;/* navbar hover over screen content */
     width: 100%;
     display: flex;
 }
