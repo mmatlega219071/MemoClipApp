@@ -4,12 +4,12 @@
     "description": "MemoClip App",
     "icons": [
       {
-        "src": "img/icons/MemoClip-128x128.png",
+        "src": "img/icons/AppIcon.png",
         "sizes": "128x128",
         "type": "image/png"
       },
       {
-        "src": "img/icons/MemoClip-512x512.png",
+        "src": "img/icons/AppIcon.png",
         "sizes": "512x512",
         "type": "image/png"
       }
