@@ -1,5 +1,5 @@
 <template>
-   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">Home</router-link>
       <button
@@ -14,28 +14,33 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings">Settings</router-link>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/app-settings"
+            >Settings</router-link
+          >
+        </li>
+      </ul>
+    </div>
   </nav>
-      <div class="row">
-        <div v-for="video in videos" :key="video.videoURL">
-          <div class="video-wrapper"><video controls :src="video.videoURL"></video>
-            <div class="col"><button class="btn btn-danger" @click="deleteThisVideo(video.docId)">delete</button>
-              <div class="w-100"></div>
-              </div>
-          </div>
+  <div class="row">
+    <div v-for="video in videos" :key="video.videoURL">
+      <div class="video-wrapper">
+        <video controls :src="video.videoURL"></video>
+        <div class="col">
+          <button class="btn btn-danger" @click="deleteThisVideo(video.docId)">
+            delete
+          </button>
+          <div class="w-100"></div>
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { listUserVideos } from "../lib/memoClipApiClient";
-import axios from "axios";
+import { deleteVideo, listUserVideos } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
   data() {
@@ -49,7 +54,7 @@ export default {
   methods: {
     async deleteThisVideo(docId) {
       try {
-        const response = await axios.delete('/delete/' + docId);
+        const response = await deleteVideo(docId);
         console.log(response.data);
         location.reload();
       } catch (error) {
@@ -66,8 +71,8 @@ export default {
   max-width: 100%;
 }
 .w-100 {
-    border: 1px solid black;
-    margin: 10px 0;
+  border: 1px solid black;
+  margin: 10px 0;
 }
 
 .video-wrapper video {
@@ -76,18 +81,16 @@ export default {
   object-fit: contain;
 }
 
-@media (min-width: 576px){
-.row video {
-  min-width: 20%;
-  height: auto;
-}
-
+@media (min-width: 576px) {
+  .row video {
+    min-width: 20%;
+    height: auto;
+  }
 }
 @media (max-width: 992px) {
-.row video {
-  max-width: 80%;
-  height: auto;
+  .row video {
+    max-width: 80%;
+    height: auto;
+  }
 }
-}
-
 </style>

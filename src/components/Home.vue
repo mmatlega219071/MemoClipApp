@@ -27,13 +27,11 @@
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/users-ranking" class="nav-link"
-              >Users ranking </router-link
-            >
+              >Users ranking
+            </router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link to="/welcome" class="nav-link"
-              >Welcome</router-link
-            >
+            <router-link to="/welcome" class="nav-link">Welcome</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
@@ -47,7 +45,9 @@
             <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link class="nav-link" to="/welcome" @click="handleSignOut">Sign out</router-link>
+            <router-link class="nav-link" to="/welcome" @click="handleSignOut"
+              >Sign out</router-link
+            >
           </li>
         </ul>
       </div>
@@ -66,16 +66,17 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { onMounted, ref } from "vue";
 import {
   onAuthStateChanged,
-  signOut,
   saveVideoWithLocation,
+  signOut,
 } from "../lib/memoClipApiClient";
 import router from "../router";
-import axios from "axios";
 
-axios.defaults.baseURL = "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
+axios.defaults.baseURL =
+  "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 const isLoggedIn = ref(false);
 
 onMounted(() => {
@@ -240,9 +241,9 @@ export default {
   object-fit: cover;
 }
 
-.navbar{
+.navbar {
   position: absolute;
-  z-index: 1;/* navbar hover over screen content */
+  z-index: 1; /* navbar hover over screen content */
   width: 100%;
   display: flex;
 }

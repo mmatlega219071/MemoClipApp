@@ -1,4 +1,8 @@
+import axios from "axios";
 import firebaseClient from "./firebaseClient";
+
+//axios.defaults.baseURL = 'https://us-central1-memoclip-e3cdb.cloudfunctions.net/api';
+const USE_3RD_LAYER = false;
 
 export async function onAuthStateChanged(callback) {
   return firebaseClient.onAuthStateChanged(callback);
@@ -16,6 +20,14 @@ export async function createUserWithEmailAndPassword(
   firstName,
   lastName
 ) {
+  if (USE_3RD_LAYER) {
+    return axios.post("/register", {
+      email,
+      password,
+      firstName,
+      lastName,
+    });
+  }
   return firebaseClient.createUserWithEmailAndPassword(
     email,
     password,
@@ -36,6 +48,9 @@ export async function listUserVideos() {
 }
 
 export async function deleteVideo(docId) {
+  if (USE_3RD_LAYER) {
+    return axios.delete(`/delete/${docId}`);
+  }
   return firebaseClient.deleteVideo(docId);
 }
 

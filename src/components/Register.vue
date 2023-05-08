@@ -2,7 +2,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <!-- kontener przy zmniejszeniu lista -->
-      <router-link class="navbar-brand" to="/welcome"><img
+      <router-link class="navbar-brand" to="/welcome"
+        ><img
           src="../../public/img/icons/return.png"
           alt="ReturnButton"
           class="logo"
@@ -21,7 +22,9 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/video-list">Video List</router-link>
+            <router-link class="nav-link" to="/video-list"
+              >Video List</router-link
+            >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
@@ -32,34 +35,37 @@
   </nav>
   <div class="mb-3"></div>
   <h2>Sign in</h2>
-    <p><input type="text" placeholder="Name" v-model="firstName" />
-    </p>
-    <p><input type="text" placeholder="Surname" v-model="lastName" />
-    </p>
-    <p><input type="text" placeholder="Email" v-model="email" />
-    </p>
-    <p><input type="password" placeholder="Password" v-model="password" />
-    </p>
-    <p><button type="button" class="btn btn-primary" @click="register">Sign in</button>
-    </p>
-    <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
-    </p>
+  <p><input type="text" placeholder="Name" v-model="firstName" /></p>
+  <p><input type="text" placeholder="Surname" v-model="lastName" /></p>
+  <p><input type="text" placeholder="Email" v-model="email" /></p>
+  <p><input type="password" placeholder="Password" v-model="password" /></p>
+  <p>
+    <button type="button" class="btn btn-primary" @click="register">
+      Sign in
+    </button>
+  </p>
+  <p>
+    <button type="button" class="btn btn-secondary" @click="registerWithGoogle">
+      Sign on using Google account
+    </button>
+  </p>
 </template>
 
 <script setup>
 /* eslint-disable no-unused-vars */
 import router from "@/router";
 import axios from "axios";
+import { getToken } from "firebase/messaging";
 import { ref } from "vue";
-import { getMessaging, getToken } from "firebase/messaging";
 import {
   createUserWithEmailAndPassword,
   createUserWithGoogleProvider,
+  firebaseConfig,
   messaging,
-  firebaseConfig
 } from "../lib/memoClipApiClient";
 
-axios.defaults.baseURL = 'https://us-central1-memoclip-e3cdb.cloudfunctions.net/api';
+axios.defaults.baseURL =
+  "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 
 const firstName = ref("");
 const lastName = ref("");
@@ -67,35 +73,35 @@ const email = ref("");
 const password = ref("");
 
 const register = async () => {
-    try {
-        console.log("User registrations");
+  try {
+    console.log("User registrations");
 
-        const response = await axios.post("/register", {
-            firstName: firstName.value,
-            lastName: lastName.value,
-            email: email.value,
-            password: password.value,
-        });
-        handleRegistration(response.data.userID)
-        console.log("User added");
-        console.log(response);
+    const response = createUserWithEmailAndPassword(
+      email.value,
+      password.value,
+      firstName.value,
+      lastName.value
+    );
+    handleRegistration(response.data.userID);
+    console.log("User added");
+    console.log(response);
 
-        router.push("/login");
-    } catch (error) {
-        console.log(error);
-    }
+    router.push("/login");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 async function handleRegistration(userId) {
   console.log(userId);
-  console.log('testowe działanie')
+  console.log("testowe działanie");
   // Pobranie tokena rejestracji
   const registrationToken = await getToken(messaging, {
     vapidKey: firebaseConfig.vapidKey,
   });
 
   // Wysłanie tokenu do serwera
-  await axios.post('/token', { registrationToken, userId });
+  await axios.post("/token", { registrationToken, userId });
 }
 
 const isLoggedIn = false;
@@ -114,12 +120,12 @@ const registerWithGoogle = async () => {
 
 <script>
 export default {
-    name: "RegisterForm",
+  name: "RegisterForm",
 };
 </script>
 
 <style scoped>
-.logo{
+.logo {
   max-height: 30px;
   max-width: 30px;
 }
