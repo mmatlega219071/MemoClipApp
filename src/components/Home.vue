@@ -73,7 +73,7 @@ import {
   saveVideoWithLocation,
 } from "../lib/memoClipApiClient";
 import router from "../router";
-//import axios from "axios";
+import axios from "axios";
 
 axios.defaults.baseURL = "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 const isLoggedIn = ref(false);
