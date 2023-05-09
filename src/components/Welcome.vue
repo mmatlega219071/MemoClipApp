@@ -9,7 +9,7 @@
             <li class="appName">Memoclip</li>
             <li class="nav-item-LogIn">Welcome!</li>
             <li class="nav-item-LogIn"><router-link class="nav-link" to="/login">Log in</router-link></li>
-            <li class="nav-item-LogIn"><router-link class="nav-link" to="/register">Sign on</router-link></li>
+            <li class="nav-item-LogIn"><router-link class="nav-link" to="/register">Sign in</router-link></li>
             </h1>
         </div>
       </nav>

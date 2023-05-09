@@ -27,17 +27,12 @@
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/users-ranking" class="nav-link"
-              >Users raning </router-link
+              >Users ranking </router-link
             >
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
-              >Settings App - test</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/welcome"
-              >Welcome Site</router-link
+              >Credits</router-link
             >
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
@@ -92,7 +87,7 @@ const handleSignOut = async () => {
   try {
     await signOut();
     console.log("Logged out");
-    router.push("/");
+    router.push("/welcome");
   } catch (err) {
     console.error(err);
   }
@@ -196,6 +191,7 @@ export default {
         );
         console.log("Video saved", result);
         alert("video saved");
+        location.reload();
       } catch (err) {
         console.error(err);
         alert("Video saving error");

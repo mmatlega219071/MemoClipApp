@@ -31,7 +31,7 @@
     </div>
   </nav>
   <div class="mb-3"></div>
-  <h2>Sign on</h2>
+  <h2>Sign in</h2>
     <p><input type="text" placeholder="Name" v-model="firstName" />
     </p>
     <p><input type="text" placeholder="Surname" v-model="lastName" />
@@ -40,7 +40,7 @@
     </p>
     <p><input type="password" placeholder="Password" v-model="password" />
     </p>
-    <p><button type="button" class="btn btn-primary" @click="register">Sign on</button>
+    <p><button type="button" class="btn btn-primary" @click="register">Sign in</button>
     </p>
     <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
     </p>
@@ -80,7 +80,7 @@ const register = async () => {
         console.log("User added");
         console.log(response);
 
-        router.push("/");
+        router.push("/login");
     } catch (error) {
         console.log(error);
     }

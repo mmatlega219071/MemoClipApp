@@ -19,14 +19,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item"><router-link class="nav-link" to="/video-list">Video List</router-link></li>
           <li class="nav-item"><router-link class="nav-link" to="/app-settings">Settings</router-link></li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="container mt-3">
-    <h2 class="text-center">Log in</h2>
+    <h2 class="text-center login">Log in</h2>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <form>
@@ -93,6 +92,9 @@ const register = async () => {
 </script>
 
 <style scoped>
+.login {
+  margin-top: 100px;
+}
 .logo{
   max-height: 30px;
   max-width: 30px;

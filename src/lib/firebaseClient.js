@@ -160,6 +160,17 @@ export default {
     // File deleted successfully
   },
 
+  async getAllVideos() {
+    const videosCollectionRef = collection(db, "videos");
+    const querySnapshot = await getDocs(videosCollectionRef);
+    
+    const userVideosOutput = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+    
+    return userVideosOutput;
+  },
+
   messaging,
   firebaseConfig,
 };

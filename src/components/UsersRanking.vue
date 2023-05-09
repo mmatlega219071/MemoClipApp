@@ -20,68 +20,44 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item" v-if="isLoggedIn">
+            <li class="nav-item">
               <router-link to="/video-list" class="nav-link"
                 >Video list</router-link
               >
             </li>
-            <li class="nav-item" v-if="isLoggedIn">
-              <router-link to="/user-ranking" class="nav-link"
-                >Users raning </router-link
-              >
-            </li>
             <li class="nav-item">
               <router-link to="/app-settings" class="nav-link"
-                >Settings App - test</router-link
+                >Credits</router-link
               >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/welcome"
-                >Welcome Site</router-link
-              >
-            </li>
-            <li class="nav-item" v-if="!isLoggedIn">
-              <router-link class="nav-link" to="/login">Log in</router-link>
-            </li>
-            <li class="nav-item" v-if="!isLoggedIn">
-              <router-link class="nav-link" to="/register">Sign up</router-link>
-            </li>
-            <li class="nav-item" v-if="isLoggedIn">
-              <a class="nav-link btn btn-link" @click="handleSignOut">Sign out</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container">
-      <div class="row">
-        <h2>Ranking list:</h2>
-        <table>
-          <tr>
-            <th>User</th>
-            <th>Number of recorded videos</th>
-          </tr>
-          <tr>
-            <td>Jan Kowalski</td>
-            <td>10 videos</td>
-          </tr>
-          <tr>
-            <td>Piotr Nowak</td>
-            <td>5 videos</td>
-          </tr>
-          <tr>
-            <td>Julia Lis</td>
-            <td>3 videos</td>
-          </tr>
-        </table>
+      <div>
+        <h3>Top 5 użytkowników z największą ilością nagrań z ostatniego dnia</h3>
+        <ul>
+          <li v-for="(video, index) in videos" :key="index">
+            {{ video.name }}
+          </li>
+        </ul>
       </div>
     </div>
   </template>
 
 <script>
+import { getAllVideos } from "../lib/memoClipApiClient";
 export default {
-    name: "WelcomeScreen",
-    // JavaScript
+  name: "RankingComponent",
+  data() {
+    return {
+      videos: [],
+    };
+  },
+  async mounted() {
+    this.videos = await getAllVideos();
+  },
 };
 </script>
 

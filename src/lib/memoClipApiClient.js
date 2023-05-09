@@ -39,5 +39,9 @@ export async function deleteVideo(docId) {
   return firebaseClient.deleteVideo(docId);
 }
 
+export async function getAllVideos() {
+  return firebaseClient.getAllVideos();
+}
+
 export const messaging = firebaseClient.messaging;
 export const firebaseConfig = firebaseClient.firebaseConfig;

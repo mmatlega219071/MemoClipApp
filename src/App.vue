@@ -3,23 +3,8 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
-import 'firebase/messaging';
-
 export default {
   name: 'App',
-  mounted() {
-    const messaging = firebase.messaging();
-
-    messaging.onMessage((payload) => {
-      console.log('Received foreground message:', payload);
-      const vibrationDuration = parseInt(payload.data.vibration);
-      
-      if (navigator && navigator.vibrate) {
-        navigator.vibrate(vibrationDuration);
-      }
-    });
-  },
 }
 </script>
 
@@ -31,6 +16,6 @@ export default {
   text-align: center;
   color: #ffffff;
   background: #232526;
-  height: 250vh;
+  height: 100vh;
 }
 </style>
