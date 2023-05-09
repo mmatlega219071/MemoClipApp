@@ -22,7 +22,7 @@
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
-              >Settings App - test</router-link
+              >Credits</router-link
             >
           </li>
           <li class="nav-item">
@@ -79,7 +79,7 @@ const handleSignOut = async () => {
   try {
     await signOut();
     console.log("Logged out");
-    router.push("/");
+    router.push("/welcome");
   } catch (err) {
     console.error(err);
   }
