@@ -36,7 +36,7 @@
             <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <a class="nav-link btn btn-link" @click="handleSignOut">Sign out</a>
+            <router-link class="nav-link" to="/welcome" @click="handleSignOut">Sign out</router-link>
           </li>
         </ul>
       </div>
