@@ -49,10 +49,15 @@
           </div>
           <div class="d-grid gap-2 text-center">
             <button type="button" class="btn btn-primary" @click="register">Log in</button>
+            <div class="d-grid gap-2 text-center"> 
+            <button type="button" class="btn btn-primary" @click="registerWithGoogle">Log in using Google account</button>
+          </div>
+          <br>
             <router-link to="/register">
               <button type="button" class="btn btn-secondary"> You do not have an account? Click here to register </button>
             </router-link>
           </div>
+          
           <p class="text-danger">{{ errMsg }}</p>
         </form>
       </div>
@@ -63,6 +68,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { signInWithEmailAndPassword } from "../lib/memoClipApiClient";
+import { createUserWithGoogleProvider,} from "../lib/memoClipApiClient";
 
 const email = ref("");
 const password = ref("");
@@ -89,6 +95,17 @@ const register = async () => {
     }
   }
 };
+
+const registerWithGoogle = async () => {
+  try {
+    await createUserWithGoogleProvider();
+    router.push("/");
+    console.log("User added");
+  } catch (err) {
+    console.error(err);
+    alert("User adding error");
+  }
+};
 </script>
 
 <style scoped>
@@ -96,6 +113,5 @@ const register = async () => {
   max-height: 30px;
   max-width: 30px;
 }
-
 
 </style>
