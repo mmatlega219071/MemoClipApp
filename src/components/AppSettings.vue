@@ -43,4 +43,8 @@ export default {
   text-decoration: none;
   color: white;
 }
+.container-fluid img {
+  max-height: 45px;
+  max-width: 45px;
+}
 </style>

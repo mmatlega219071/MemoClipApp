@@ -83,4 +83,8 @@ tr:nth-child(even) {
   width: 35px;
   height: 35px;
 }
+.container-fluid img {
+  max-height: 45px;
+  max-width: 45px;
+}
 </style>
