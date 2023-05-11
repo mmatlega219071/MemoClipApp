@@ -42,7 +42,7 @@
     </p>
     <p><button type="button" class="btn btn-primary" @click="register">Sign in</button>
     </p>
-    <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
+    <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign in using Google account</button>
     </p>
 </template>
 
