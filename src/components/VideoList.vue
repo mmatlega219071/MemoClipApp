@@ -79,7 +79,10 @@ export default {
   max-height: 400px;
   object-fit: contain;
 }
-
+.logo {
+  width: 35px;
+  height: 35px;
+}
 @media (min-width: 576px){
 .row video {
   min-width: 20%;
