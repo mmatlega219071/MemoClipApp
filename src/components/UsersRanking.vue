@@ -36,12 +36,12 @@
     </nav>
     <div class="container">
       <div>
-        <h3>Top 5 użytkowników z największą ilością nagrań z ostatniego dnia</h3>
-        <ul>
-          <li v-for="(video, index) in videos" :key="index">
-            {{ video.name }}
-          </li>
-        </ul>
+        <h3>Top 5 users</h3>
+        <div class="box">
+          <p v-for="(topUser, index) in topFiveUsers" :key="index">
+            {{ topUser.userFirstName }} {{ topUser.userLastName }} | Number of video: {{ topUser.liczbaWideo }}
+          </p>
+        </div>
       </div>
     </div>
   </template>
@@ -52,11 +52,16 @@ export default {
   name: "RankingComponent",
   data() {
     return {
-      videos: [],
+      userVideosList: [],
+      topFiveUsers: [],
     };
   },
   async mounted() {
-    this.videos = await getAllVideos();
+    this.userVideosList = await getAllVideos();
+
+    this.userVideosList.sort((a, b) => b.videoNumber - a.videoNumber);
+    this.topFiveUsers = this.userVideosList.slice(0, 5);
+    console.log("przyjąłem dane");
   },
 };
 </script>
@@ -77,6 +82,19 @@ td, th {
 tr:nth-child(even) {
   background-color: #fff;
   color: #000;
+}
+
+.box {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+h3 {
+  margin-top: 60px;
 }
 
 .logo {

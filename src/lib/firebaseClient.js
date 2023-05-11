@@ -161,16 +161,42 @@ export default {
   },
 
   async getAllVideos() {
-    const videosCollectionRef = collection(db, "videos");
-    const querySnapshot = await getDocs(videosCollectionRef);
+    let tab= [];
+    const querySnapshotUsers = await getDocs(collection(db, "users"));
+  
+    for (const user of querySnapshotUsers.docs) {
+      const userDocRef = doc(db, "users", user.id);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        var firstName = userData.firstName;
+        var lastName = userData.lastName;
+      }
+
+      const q = query(collection(db, "videos"), where("user", "==", user.id));
+      const result = await getDocs(q);
+
+      const userObj = {
+        user: user.id,
+        userFirstName: firstName,
+        userLastName: lastName,
+        videoNumber: result.size
+      }
+
+      tab.push(userObj)
+    }
+
+    const topUsersCollectionRef = collection(db, 'topUsers');
+    const docRef = doc(topUsersCollectionRef);
     
-    const userVideosOutput = querySnapshot.docs.map((doc) => {
-      return { id: doc.id, ...doc.data() };
+    await setDoc(docRef, {
+      listOfTopUsers: tab
     });
     
-    return userVideosOutput;
+    return tab;
   },
-
+  
   messaging,
   firebaseConfig,
 };
