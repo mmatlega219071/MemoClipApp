@@ -22,7 +22,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings">Settings</router-link>
+            <router-link class="nav-link" to="/app-settings">Credits</router-link>
           </li>
         </ul>
       </div>
