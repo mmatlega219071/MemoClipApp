@@ -4,11 +4,14 @@
 
 <script>
 export default {
-  name: 'App',
-}
+  name: "App",
+};
 </script>
 
 <style>
+body {
+  background: #232526;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

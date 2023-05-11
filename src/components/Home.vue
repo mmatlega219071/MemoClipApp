@@ -84,7 +84,7 @@ onMounted(async () => {
     if (user) {
       isLoggedIn.value = true;
     } else {
-      isLoggedIn.value = false;
+      router.push("/welcome");
     }
   });
 
