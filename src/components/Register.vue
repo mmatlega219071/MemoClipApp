@@ -20,9 +20,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/video-list">Video List</router-link>
-          </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link class="nav-link" to="/login">Log in</router-link>
           </li>
@@ -40,7 +37,7 @@
     </p>
     <p><input type="password" placeholder="Password" v-model="password" />
     </p>
-    <p><button type="button" class="btn btn-primary" @click="register">Sign in</button>
+    <p><button type="button" class="btn btn-primary" @click="register">Sign on</button>
     </p>
     <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign on using Google account</button>
     </p>
@@ -80,13 +77,13 @@ const register = async () => {
         console.log("User added");
         console.log(response);
 
-        router.push("/login");
+        router.push("/");
     } catch (error) {
         console.log(error);
     }
 };
 
-async function handleRegistration(userId) {
+async function handleRegistration(userId) {                                                                               
   console.log(userId);
   console.log('testowe działanie')
   // Pobranie tokena rejestracji

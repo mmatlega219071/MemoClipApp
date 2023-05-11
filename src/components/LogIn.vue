@@ -92,12 +92,10 @@ const register = async () => {
 </script>
 
 <style scoped>
-.login {
-  margin-top: 100px;
-}
 .logo{
   max-height: 30px;
   max-width: 30px;
 }
+
 
 </style>
