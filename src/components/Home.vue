@@ -27,13 +27,11 @@
           </li>
           <li class="nav-item" v-if="isLoggedIn">
             <router-link to="/users-ranking" class="nav-link"
-              >Users ranking </router-link
-            >
+              >Users ranking
+            </router-link>
           </li>
           <li class="nav-item" v-if="!isLoggedIn">
-            <router-link to="/welcome" class="nav-link"
-              >Welcome</router-link
-            >
+            <router-link to="/welcome" class="nav-link">Welcome</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/app-settings" class="nav-link"
@@ -47,38 +45,41 @@
             <router-link class="nav-link" to="/register">Sign up</router-link>
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link class="nav-link" to="/welcome" @click="handleSignOut">Sign out</router-link>
+            <router-link class="nav-link" to="/welcome" @click="handleSignOut"
+              >Sign out</router-link
+            >
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="video-container">
-    <video ref="videoPlayer" autoplay muted playsinline></video>
+    <video ref="videoPlayer" muted playsinline></video>
   </div>
   <div class="footer">
     <button class="record-button" @click="startRecording"></button>
   </div>
   <div class="record-buttons-container" v-if="isRecorded">
-    <button class="btn btn-secondary" @click="deleteVideo">Delete</button>
-    <button class="btn btn-secondary" @click="saveVideo">Save</button>
+    <button class="btn btn-danger" @click="deleteVideo">Delete video</button>
+    <button class="btn btn-primary" @click="saveVideo">Save video</button>
   </div>
 </template>
 
 <script setup>
+import axios from "axios";
 import { onMounted, ref } from "vue";
 import {
   onAuthStateChanged,
-  signOut,
   saveVideoWithLocation,
+  signOut,
 } from "../lib/memoClipApiClient";
 import router from "../router";
-import axios from "axios";
 
-axios.defaults.baseURL = "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
+axios.defaults.baseURL =
+  "https://us-central1-memoclip-e3cdb.cloudfunctions.net/api";
 const isLoggedIn = ref(false);
 
-onMounted(() => {
+onMounted(async () => {
   onAuthStateChanged((user) => {
     if (user) {
       isLoggedIn.value = true;
@@ -86,6 +87,18 @@ onMounted(() => {
       isLoggedIn.value = false;
     }
   });
+
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true,
+  });
+  const video = document.querySelector("video");
+  if ("srcObject" in video) {
+    video.srcObject = stream;
+  } else {
+    video.src = window.URL.createObjectURL(stream);
+  }
+  await video.play();
 });
 
 const handleSignOut = async () => {
@@ -114,6 +127,19 @@ export default {
     };
   },
   methods: {
+    async initVideoContainer() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+      const video = document.querySelector("video");
+      if ("srcObject" in video) {
+        video.srcObject = stream;
+      } else {
+        video.src = window.URL.createObjectURL(stream);
+      }
+      await video.play();
+    },
     async startRecording() {
       // Tutaj kod obsługujący nagrywanie filmiku
 
@@ -146,34 +172,6 @@ export default {
           video.src = recordedURL;
           video.controls = true;
           video.play();
-
-          // Dodaj przyciski Zapisz i Odrzuć
-          // const saveButton = document.createElement("button");
-          // saveButton.textContent = "Save";
-          // saveButton.addEventListener("click", async () => {
-          //   try {
-          //     const result = await saveVideoWithLocation(
-          //       this.recordedChunks,
-          //       await this.getLocation()
-          //     );
-          //     console.log("Video saved", result);
-          //   } catch (err) {
-          //     console.error(err);
-          //     alert("Video saving error");
-          //   }
-          // });
-
-          // const discardButton = document.createElement("button");
-          // discardButton.textContent = "Delete";
-          // discardButton.addEventListener("click", function () {
-          //   // Kod obsługujący odrzucanie nagrania
-          //   console.log("Deleting file...");
-          // });
-
-          // const buttonContainer = document.createElement("div");
-          // buttonContainer.appendChild(saveButton);
-          // buttonContainer.appendChild(discardButton);
-          // video.parentElement.appendChild(buttonContainer);
         });
 
         setTimeout(() => {
@@ -201,6 +199,12 @@ export default {
         console.error(err);
         alert("Video saving error");
       }
+    },
+
+    async deleteVideo() {
+      isRecorded.value = false;
+      this.initVideoContainer();
+      alert("video deleted, try another one");
     },
 
     async getLocation() {
@@ -240,9 +244,9 @@ export default {
   object-fit: cover;
 }
 
-.navbar{
+.navbar {
   position: absolute;
-  z-index: 1;/* navbar hover over screen content */
+  z-index: 1; /* navbar hover over screen content */
   width: 100%;
   display: flex;
 }
