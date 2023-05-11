@@ -24,13 +24,17 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Credits</router-link>
           </li>
+          <li class="nav-item" v-if="isLoggedIn">
+            <router-link to="/users-ranking" class="nav-link">Users ranking</router-link>
+          </li>
         </ul>
       </div>
   </nav>
       <div class="row">
         <div v-for="video in videos" :key="video.videoURL">
-          <div class="video-wrapper"><video controls :src="video.videoURL"></video>
-            <div class="col"><button class="btn btn-danger" @click="deleteThisVideo(video.docId)">delete</button>
+          <div class="col">data</div>
+          <div class="video-wrapper"><video controls :src="video.videoURL" ></video>
+            <div class="col"><button class="btn btn-secondary" @click="deleteThisVideo(video.docId)">delete</button>
               <div class="w-100"></div>
               </div>
           </div>
@@ -39,8 +43,7 @@
 </template>
 
 <script>
-import { listUserVideos } from "../lib/memoClipApiClient";
-import axios from "axios";
+import { listUserVideos, deleteVideo } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
   data() {
@@ -53,12 +56,7 @@ export default {
   },
   methods: {
     async deleteThisVideo(docId) {
-      try {
-        const response = await axios.delete('/delete/' + docId);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+      return deleteVideo(docId);
     },
   },
 };
@@ -68,6 +66,8 @@ export default {
 .video-wrapper {
   position: static;
   max-width: 100%;
+  height: 100%;
+  background: #232526;
 }
 .w-100 {
     border: 1px solid black;
@@ -94,12 +94,4 @@ export default {
 }
 }
 
-.container-fluid img {
-  max-height: 45px;
-  max-width: 45px;
-}
-.logo {
-  width: 35px;
-  height: 35px;
-}
 </style>
