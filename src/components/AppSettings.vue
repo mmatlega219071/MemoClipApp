@@ -47,4 +47,8 @@ export default {
   max-height: 45px;
   max-width: 45px;
 }
+.logo {
+  width: 35px;
+  height: 35px;
+}
 </style>
