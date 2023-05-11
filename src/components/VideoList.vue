@@ -24,7 +24,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/app-settings">Credits</router-link>
           </li>
-          <li class="nav-item" v-if="isLoggedIn">
+          <li class="nav-item">
             <router-link to="/users-ranking" class="nav-link">Users ranking</router-link>
           </li>
         </ul>
