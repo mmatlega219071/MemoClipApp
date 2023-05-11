@@ -54,6 +54,8 @@
               <button type="button" class="btn btn-secondary"> You do not have an account? Click here to register </button>
             </router-link>
           </div>
+          <div>  <button type="button" class="btn btn-secondary" @click="registerWithGoogle">Log in using Google account</button>
+          </div>
           <p class="text-danger">{{ errMsg }}</p>
         </form>
       </div>
@@ -64,6 +66,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { signInWithEmailAndPassword } from "../lib/memoClipApiClient";
+import { createUserWithGoogleProvider,} from "../lib/memoClipApiClient";
 
 const email = ref("");
 const password = ref("");
@@ -90,12 +93,20 @@ const register = async () => {
     }
   }
 };
+
+const registerWithGoogle = async () => {
+  try {
+    await createUserWithGoogleProvider();
+    router.push("/");
+    console.log("User added");
+  } catch (err) {
+    console.error(err);
+    alert("User adding error");
+  }
+};
 </script>
 
 <style scoped>
-.logo{
-  max-height: 30px;
-  max-width: 30px;
-}
+
 
 </style>
