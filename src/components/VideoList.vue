@@ -56,7 +56,6 @@ export default {
       try {
         const response = await axios.delete('/delete/' + docId);
         console.log(response.data);
-        location.reload();
       } catch (error) {
         console.error(error);
       }
