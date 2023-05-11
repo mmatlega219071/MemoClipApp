@@ -1,12 +1,12 @@
 <template>
-   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link to="/" class="navbar-brand"
-          ><img
-            src="../../public/img/icons/AppIcon.png"
-            alt="AppIcon"
-            class="logo"
-        /></router-link>
+        ><img
+          src="../../public/img/icons/AppIcon.png"
+          alt="AppIcon"
+          class="logo"
+      /></router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,31 +19,41 @@
         <span class="navbar-toggler-icon"></span>
       </button>
     </div>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/app-settings">Credits</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/users-ranking" class="nav-link">Users ranking</router-link>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/app-settings">Credits</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/users-ranking" class="nav-link"
+            >Users ranking</router-link
+          >
+        </li>
+      </ul>
+    </div>
   </nav>
-      <div class="row">
-        <div v-for="video in videos" :key="video.videoURL">
-          <div class="col">data</div>
-          <div class="video-wrapper"><video controls :src="video.videoURL" ></video>
-            <div class="col"><button class="btn btn-secondary" @click="deleteThisVideo(video.docId)">delete</button>
-              <div class="w-100"></div>
-              </div>
-          </div>
+  <div class="row">
+    <p v-if="!videos.length">
+      You haven't recorded any videos yet, get started at <a href="/">Home</a>
+    </p>
+    <div v-for="video in videos" :key="video.videoURL">
+      <p>{{ video.createdAt.toLocaleString("pl-PL") }}</p>
+      <div class="video-wrapper">
+        <video controls :src="video.videoURL"></video>
+        <div class="col">
+          <button class="btn btn-danger" @click="deleteThisVideo(video.docId)">
+            delete
+          </button>
+          <div class="w-100"></div>
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { listUserVideos, deleteVideo } from "../lib/memoClipApiClient";
+import axios from "axios";
+import { listUserVideos } from "../lib/memoClipApiClient";
 export default {
   name: "VideoList",
   data() {
@@ -56,7 +66,14 @@ export default {
   },
   methods: {
     async deleteThisVideo(docId) {
-      return deleteVideo(docId);
+      try {
+        const response = await axios.delete("/delete/" + docId);
+        console.log(response.data);
+        alert("Video deleted");
+        this.videos = await listUserVideos();
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
@@ -70,8 +87,8 @@ export default {
   background: #232526;
 }
 .w-100 {
-    border: 1px solid black;
-    margin: 10px 0;
+  border: 1px solid black;
+  margin: 10px 0;
 }
 
 .video-wrapper video {
@@ -79,22 +96,17 @@ export default {
   max-height: 400px;
   object-fit: contain;
 }
-.logo {
-  width: 35px;
-  height: 35px;
-}
-@media (min-width: 576px){
-.row video {
-  min-width: 20%;
-  height: auto;
-}
 
+@media (min-width: 576px) {
+  .row video {
+    min-width: 20%;
+    height: auto;
+  }
 }
 @media (max-width: 992px) {
-.row video {
-  max-width: 80%;
-  height: auto;
+  .row video {
+    max-width: 80%;
+    height: auto;
+  }
 }
-}
-
 </style>
