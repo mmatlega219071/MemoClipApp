@@ -50,12 +50,16 @@
           </div>
           <div class="d-grid gap-2 text-center">
             <button type="button" class="btn btn-primary" @click="register">Log in</button>
+            
+          <div> 
+            <button type="button" class="btn btn-primary" @click="registerWithGoogle">Log in using Google account</button>
+          </div>
+          <br>
             <router-link to="/register">
               <button type="button" class="btn btn-secondary"> You do not have an account? Click here to register </button>
             </router-link>
           </div>
-          <div>  <button type="button" class="btn btn-secondary" @click="registerWithGoogle">Log in using Google account</button>
-          </div>
+          
           <p class="text-danger">{{ errMsg }}</p>
         </form>
       </div>
@@ -107,6 +111,9 @@ const registerWithGoogle = async () => {
 </script>
 
 <style scoped>
-
+.logo{
+  max-height: 30px;
+  max-width: 30px;
+}
 
 </style>
