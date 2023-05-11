@@ -26,10 +26,10 @@
               >
             </li>
             <li class="nav-item">
-              <router-link to="/app-settings" class="nav-link"
-                >Credits</router-link
-              >
-            </li>
+          <router-link to="/users-ranking" class="nav-link"
+            >Users ranking</router-link
+          >
+        </li>
           </ul>
         </div>
       </div>
