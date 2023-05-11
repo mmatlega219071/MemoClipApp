@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import {
+const { initializeApp } = require("firebase/app");
+const {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
@@ -7,31 +7,29 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-} from "firebase/auth";
+} = require("firebase/auth");
 
-import {
+const {
   addDoc,
   collection,
+  deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   getFirestore,
+  query,
   serverTimestamp,
   setDoc,
-  query,
   where,
-  getDocs,
-  getDoc,
-  deleteDoc,
-} from "firebase/firestore";
+} = require("firebase/firestore");
 
-import {
-  getStorage,
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
+const {
   deleteObject,
-} from "firebase/storage";
-
-import { getMessaging } from "firebase/messaging";
+  getDownloadURL,
+  getStorage,
+  ref: storageRef,
+  uploadBytes,
+} = require("firebase/storage");
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPlm0KNLExsLzVQeayl3WTU3d8JSTdKZE",
@@ -50,9 +48,7 @@ const application = initializeApp(firebaseConfig);
 const db = getFirestore();
 getAuth(application);
 
-const messaging = getMessaging(application);
-
-export default {
+module.exports = {
   async createUserWithEmailAndPassword(email, password, firstName, lastName) {
     const user = await createUserWithEmailAndPassword(
       getAuth(),
@@ -90,6 +86,11 @@ export default {
     };
     await setDoc(userDoc, userData);
     return userData;
+  },
+
+  async createUserToken(userId, fcmToken) {
+    const userDocRef = db.collection("users").doc(userId);
+    await userDocRef.update({ fcmToken });
   },
 
   async signInWithEmailAndPassword(email, password) {
@@ -160,6 +161,16 @@ export default {
     // File deleted successfully
   },
 
-  messaging,
+  async getAllVideos() {
+    const videosCollectionRef = collection(db, "videos");
+    const querySnapshot = await getDocs(videosCollectionRef);
+
+    const userVideosOutput = querySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+
+    return userVideosOutput;
+  },
+
   firebaseConfig,
 };
