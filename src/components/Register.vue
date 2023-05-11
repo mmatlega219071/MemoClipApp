@@ -37,7 +37,7 @@
     </p>
     <p><input type="password" placeholder="Password" v-model="password" />
     </p>
-    <p><button type="button" class="btn btn-primary" @click="register">Sign on</button>
+    <p><button type="button" class="btn btn-primary" @click="register">Sign in</button>
     </p>
     <p><button type="button" class="btn btn-secondary" @click="registerWithGoogle">Sign in using Google account</button>
     </p>
